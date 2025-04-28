@@ -75,9 +75,9 @@ void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
 //* @public: PrototypeWrapper()
 PrototypeWrapper::PrototypeWrapper(const string window_title,
                                    const Vector2f dimensions)
-    : window(VideoMode::getDesktopMode(), window_title, Style::Fullscreen),
-      title(window_title, green), start("Start"), exit("exit"),
-      window_dimensions(dimensions) {
+    : window(VideoMode::getDesktopMode(), window_title, Style::Fullscreen), window_dimensions(dimensions), title(window_title, green), start("start"),
+      exit("exit")
+      {
 
   //&* @def: Initialize RenderWindow
   window.setFramerateLimit(120);      //* @note: Cap Framerate

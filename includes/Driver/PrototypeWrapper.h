@@ -1,9 +1,7 @@
 #pragma once
 #include "../Objects/Button.h"
-#include "../Objects/Player.h"
+// #include "../Objects/Player.h"
 #include "../Objects/Textbox.h"
-#include "../master.h"
-#include <SFML/System/Vector2.hpp>
 
 //& Class - PrototypeWrapper
 class PrototypeWrapper {

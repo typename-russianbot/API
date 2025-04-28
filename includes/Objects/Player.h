@@ -1,5 +1,4 @@
 #pragma once
-#include "../master.h"
 
 // // TODO: Player.h
 // class Player {
