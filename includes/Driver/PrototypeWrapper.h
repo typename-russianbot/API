@@ -1,7 +1,7 @@
 #pragma once
+#include "../Objects/Board.h"
 #include "../Objects/Button.h"
 #include "../Objects/Textbox.h"
-#include "../Objects/Tile.h"
 
 //& Class - PrototypeWrapper
 class PrototypeWrapper {
@@ -10,30 +10,31 @@ private:
   RenderWindow window;        //&* @var: window
   Vector2f window_dimensions; //&* @var: window_dimensions
 
-  //&* Objects:
-  Textbox title;  //&* @var: title
-  Button start;   //&* @var: start
-  Button exit;    //&* @var: exit
-  Button back;    //&* @var: back
-  Tile tiles[8][8]; //&* @var: tiles
+  //&* Components
+  Textbox title;      //&* @var: title
+  Button start;       //&* @var: start
+  Button exit;        //&* @var: exit
+  Button back;        //&* @var: back
+  Board checkerboard; //&* @var: checkerboard
 
 protected:
   // TODO - @protected: Functions
   ////////////////////////////////////////////////////////////////////////////////////////
   //^ @protected: pollEvents(const Event, const Vector2f)
-  //^ @def:
+  //^ @def: RenderWindow event polling
+
   void pollEvents(const Event, const Vector2f);
   ////////////////////////////////////////////////////////////////////////////////////////
-
   ////////////////////////////////////////////////////////////////////////////////////////
   //^ @protected: updateFrame(void)
   //^ @def: clears prev frame & draws updated frame data
+
   void updateFrame(void);
   ////////////////////////////////////////////////////////////////////////////////////////
-
   ////////////////////////////////////////////////////////////////////////////////////////
-  //^ @protected: toggleHighlights(const Vector2f)
-  //^ @def:
+  //^ @protected: pollHighlights(const Vector2f)
+  //^ @def: RenderWindow highlight polling
+
   void pollHighlights(const Vector2f);
   ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -41,22 +42,23 @@ public:
   // TODO: Resources
   ////////////////////////////////////////////////////////////////////////////////////////
   //* @public: PrototypeWrapper(const string, const Vector2f)
-  //* @def: Constructor
+  //* @def: constructor
+
   PrototypeWrapper(const string = "PrototypeWrapper",
                    const Vector2f = {static_cast<float>(_DisplayWidth),
                                      static_cast<float>(_DisplayHeight)});
   ////////////////////////////////////////////////////////////////////////////////////////
-
   ////////////////////////////////////////////////////////////////////////////////////////
   //* @public: ~PrototypeWrapper(void)
-  //* @def: Destructor
+  //* @def: destructor
+
   ~PrototypeWrapper(void);
   ////////////////////////////////////////////////////////////////////////////////////////
 
   // TODO: Functions
   ////////////////////////////////////////////////////////////////////////////////////////
   //* @public: run(void)
-  //* @def: Program Driver
+  //* @def: program driver
   void run(void);
   ////////////////////////////////////////////////////////////////////////////////////////
 };

@@ -4,7 +4,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 //^ @protected: pollEvents(const Event, const Vector2f)
 void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
-
   //? @note: Close Window
   if (event.type == Event::Closed)
     window.close();
@@ -15,29 +14,31 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
   if (event.type == sf::Event::MouseButtonPressed &&
       event.mouseButton.button == Mouse::Left) {
 
-    //&* @note: start button clicked
+    //&* @note: start button clicked | jump to game screen
     if (start.inLocalBounds(mousePos)) {
-      cout << "Start Button Pressed" << endl;
-      if (!tiles[0][0].isVisible()) {
-        for (int i = 0; i < 8; i++) {
-          for (int j = 0; j < 8; j++) {
-            tiles[i][j].show();
-          }
-        }
-      } else {
-        for (int i = 0; i < 8; i++) {
-          for (int j = 0; j < 8; j++) {
-            tiles[i][j].hide();
-          }
-        }
-      }
+      //&* Hide menu components
+      title.hide();
+      start.hide();
+      exit.hide();
+
+      //&* Show game components
+      checkerboard.show();
+      back.show();
     }
 
     //&* @note: exit button clicked
     if (exit.inLocalBounds(mousePos)) {
-      cout << "Exit Button Pressed" << endl;
       window.close();
       return;
+    }
+
+    //&* @note: back button clicked | jump back to menu screen
+    if (back.inLocalBounds(mousePos)) {
+      //&* Hide game components
+      checkerboard.hide();
+      back.hide();
+
+      //&* Show menu components
     }
   }
 
@@ -49,17 +50,21 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
 //^ @protected: updateFrame(void)
 void PrototypeWrapper::updateFrame(void) {
   //&* @note: wipe current frame
-  window.clear(blue);
+  window.clear(green); //! @note: update to a sprite background or the ability
+                       //! to swap backgrounds
 
   //&* @note: re-draw objects
+
+  //&* textboxes
   title.draw(window);
+
+  //&* buttons
   start.draw(window);
   exit.draw(window);
-  for (int i = 0; i < 8; i++) {
-    for (int j = 0; j < 8; j++) {
-      tiles[i][j].draw(window);
-    }
-  }
+  back.draw(window);
+
+  //&* checkerboard
+  checkerboard.draw(window);
 
   //&* @note: display updated frame
   window.display();
@@ -84,14 +89,7 @@ void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
     exit.toggleHighlight(false);
 
   //* @def: highlight tiles
-  for (int i = 0; i < 8; i++) {
-    for (int j = 0; j < 8; j++) {
-      if (tiles[i][j].inLocalBounds(mousePos) && tiles[i][j].isVisible())
-        tiles[i][j].toggleHighlight(true);
-      else
-        tiles[i][j].toggleHighlight(false);
-    }
-  }
+  checkerboard.toggleHighlight(mousePos);
 
   return;
 }
@@ -104,52 +102,39 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
                                    const Vector2f dimensions)
     : window(VideoMode::getDesktopMode(), window_title, Style::Fullscreen),
       window_dimensions(dimensions), title(window_title, green), start("start"),
-      exit("exit") {
+      exit("exit"), back("back"), checkerboard({725, 200}) {
   //&* @def: Initialize RenderWindow
-  window.setFramerateLimit(120);      //* @note: Cap Framerate
-  window.setKeyRepeatEnabled(true);   //* @note: Enable Key Repeat
-  window.setMouseCursorVisible(true); //* @note: Enable Mouse Cursor Visibility
 
-  //&* @def: Initialize Objects
-  //* Board Tiles || @note: x-axis = i, y-axis = j
-  float x = 200, y = 200, xOffset = 0, yOffset = 0;
+  //&* FrameCap = 120
+  window.setFramerateLimit(120);
 
-  for (int i = 0; i < 8; i++) {
-    for (int j = 0; j < 8; j++) {
-      //* resize, setPos, setColor
-      tiles[i][j].resize(100);
-      tiles[i][j].setPosition({x + xOffset, y + yOffset});
-      if (i % 2 == 0) {
-        if (j % 2 == 0)
-          tiles[i][j].setBackgroundColor(white);
-        else
-          tiles[i][j].setBackgroundColor(black);
-      } else {
-        if (j % 2 != 0)
-          tiles[i][j].setBackgroundColor(white);
-        else
-          tiles[i][j].setBackgroundColor(black);
-      }
+  //&* KeyRepeatEnabled = true
+  window.setKeyRepeatEnabled(true);
 
-      yOffset += 150;
-    }
+  //&* MouseCursorVisible = true
+  window.setMouseCursorVisible(true);
 
-    yOffset = 0;
-    xOffset += 150;
-  }
+  //&* @def: Init RenderWindow Components
 
-  //* program title
+  //&* checkerboard
+  checkerboard.hide();
+
+  //&* textboxes
   title.resize(150);
 
-  //* start button
+  //&* buttons
   start.resize(35);
   start.setPosition({1280, 940});
   start.setHighlightColor(yellow);
 
-  //* exit button
   exit.resize(35);
   exit.setPosition({1280, 1015});
   exit.setHighlightColor(yellow);
+
+  back.resize(35);
+  back.setPosition({100, 1340});
+  back.setHighlightColor(yellow);
+  back.hide();
 
   return;
 }
