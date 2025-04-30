@@ -11,10 +11,11 @@ private:
   Vector2f window_dimensions; //&* @var: window_dimensions
 
   //&* Objects:
-  Textbox title; //&* @var: title
-  Button start;  //&* @var: start
-  Button exit;   //&* @var: exit
-  Tile tile;     //&* @var: tile
+  Textbox title;  //&* @var: title
+  Button start;   //&* @var: start
+  Button exit;    //&* @var: exit
+  Button back;    //&* @var: back
+  Tile tiles[8][8]; //&* @var: tiles
 
 protected:
   // TODO - @protected: Functions

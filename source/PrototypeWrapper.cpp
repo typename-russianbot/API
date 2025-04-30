@@ -5,22 +5,35 @@
 //^ @protected: pollEvents(const Event, const Vector2f)
 void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
 
-  //! @note: Close window
+  //? @note: Close Window
   if (event.type == Event::Closed)
     window.close();
   if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
     window.close();
 
-  //? @note: Detect Button input
+  //? @note: Mouse Button Pressed
   if (event.type == sf::Event::MouseButtonPressed &&
       event.mouseButton.button == Mouse::Left) {
 
-    //* @note: start button clicked
+    //&* @note: start button clicked
     if (start.inLocalBounds(mousePos)) {
       cout << "Start Button Pressed" << endl;
+      if (!tiles[0][0].isVisible()) {
+        for (int i = 0; i < 8; i++) {
+          for (int j = 0; j < 8; j++) {
+            tiles[i][j].show();
+          }
+        }
+      } else {
+        for (int i = 0; i < 8; i++) {
+          for (int j = 0; j < 8; j++) {
+            tiles[i][j].show();
+          }
+        }
+      }
     }
 
-    //* exit button clicked
+    //&* @note: exit button clicked
     if (exit.inLocalBounds(mousePos)) {
       cout << "Exit Button Pressed" << endl;
       window.close();
@@ -35,16 +48,20 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //^ @protected: updateFrame(void)
 void PrototypeWrapper::updateFrame(void) {
-  //* @note: wipe previous frame
+  //&* @note: wipe current frame
   window.clear(black);
 
-  //* @note: draw objects
+  //&* @note: re-draw objects
   title.draw(window);
   start.draw(window);
   exit.draw(window);
-  tile.draw(window);
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j < 8; j++) {
+      tiles[i][j].draw(window);
+    }
+  }
 
-  //* @note: display updated frame
+  //&* @note: display updated frame
   window.display();
 
   return;
@@ -54,18 +71,27 @@ void PrototypeWrapper::updateFrame(void) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //^ @protected: toggleHighlights(const Vector2f)
 void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
-
-  //* @def: start button toggle
+  //* @def: highlight start button
   if (start.inLocalBounds(mousePos) && start.isVisible())
     start.toggleHighlight(true);
   else
     start.toggleHighlight(false);
 
-  //* @def: exit button toggle
-  if (exit.inLocalBounds(mousePos) && start.isVisible())
+  //* @def: highlight exit button
+  if (exit.inLocalBounds(mousePos) && exit.isVisible())
     exit.toggleHighlight(true);
   else
     exit.toggleHighlight(false);
+
+  //* @def: highlight tiles
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j < 8; j++) {
+      if (tiles[i][j].inLocalBounds(mousePos) && tiles[i][j].isVisible())
+        tiles[i][j].toggleHighlight(true);
+      else
+        tiles[i][j].toggleHighlight(false);
+    }
+  }
 
   return;
 }
@@ -78,16 +104,33 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
                                    const Vector2f dimensions)
     : window(VideoMode::getDesktopMode(), window_title, Style::Fullscreen),
       window_dimensions(dimensions), title(window_title, green), start("start"),
-      exit("exit"), tile(red) {
-
+      exit("exit") {
   //&* @def: Initialize RenderWindow
   window.setFramerateLimit(120);      //* @note: Cap Framerate
   window.setKeyRepeatEnabled(true);   //* @note: Enable Key Repeat
   window.setMouseCursorVisible(true); //* @note: Enable Mouse Cursor Visibility
 
   //&* @def: Initialize Objects
-  tile.resize({50, 50});
-  tile.setPosition({1280, 200});
+  //* Board Tiles
+  float x = 500, y = 500;
+
+  //* rows
+  for (int i = 0; i < 8; i++) {
+    //* cols
+    for (int j = 0; j < 8; j++) {
+      if (i % 2 == 0) {
+        if (j % 2 == 0)
+          tiles[i][j].setBackgroundColor(white);
+        else
+          tiles[i][j].setBackgroundColor(black);
+      } else {
+        if (j % 2 != 0)
+          tiles[i][j].setBackgroundColor(white);
+        else
+          tiles[i][j].setBackgroundColor(black);
+      }
+    }
+  }
 
   //* program title
   title.resize(150);
@@ -101,6 +144,7 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
   exit.resize(35);
   exit.setPosition({1280, 1015});
   exit.setHighlightColor(yellow);
+
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////////////
