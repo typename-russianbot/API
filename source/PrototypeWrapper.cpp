@@ -42,6 +42,7 @@ void PrototypeWrapper::updateFrame(void) {
   title.draw(window);
   start.draw(window);
   exit.draw(window);
+  tile.draw(window);
 
   //* @note: display updated frame
   window.display();
@@ -75,9 +76,9 @@ void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
 //* @public: PrototypeWrapper()
 PrototypeWrapper::PrototypeWrapper(const string window_title,
                                    const Vector2f dimensions)
-    : window(VideoMode::getDesktopMode(), window_title, Style::Fullscreen), window_dimensions(dimensions), title(window_title, green), start("start"),
-      exit("exit")
-      {
+    : window(VideoMode::getDesktopMode(), window_title, Style::Fullscreen),
+      window_dimensions(dimensions), title(window_title, green), start("start"),
+      exit("exit"), tile(red) {
 
   //&* @def: Initialize RenderWindow
   window.setFramerateLimit(120);      //* @note: Cap Framerate
@@ -85,6 +86,8 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
   window.setMouseCursorVisible(true); //* @note: Enable Mouse Cursor Visibility
 
   //&* @def: Initialize Objects
+  tile.resize({50, 50});
+  tile.setPosition({1280, 200});
 
   //* program title
   title.resize(150);

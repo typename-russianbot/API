@@ -1,7 +1,7 @@
 #pragma once
 #include "../Objects/Button.h"
-// #include "../Objects/Player.h"
 #include "../Objects/Textbox.h"
+#include "../Objects/Tile.h"
 
 //& Class - PrototypeWrapper
 class PrototypeWrapper {
@@ -14,6 +14,7 @@ private:
   Textbox title; //&* @var: title
   Button start;  //&* @var: start
   Button exit;   //&* @var: exit
+  Tile tile;     //&* @var: tile
 
 protected:
   // TODO - @protected: Functions
