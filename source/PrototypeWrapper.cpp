@@ -15,7 +15,7 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
       event.mouseButton.button == Mouse::Left) {
 
     //&* @note: start button clicked | jump to game screen
-    if (start.inLocalBounds(mousePos)) {
+    if (start.inLocalBounds(mousePos) && start.isVisible()) {
       //&* Hide menu components
       title.hide();
       start.hide();
@@ -27,18 +27,21 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
     }
 
     //&* @note: exit button clicked
-    if (exit.inLocalBounds(mousePos)) {
+    if (exit.inLocalBounds(mousePos) && exit.isVisible()) {
       window.close();
       return;
     }
 
     //&* @note: back button clicked | jump back to menu screen
-    if (back.inLocalBounds(mousePos)) {
+    if (back.inLocalBounds(mousePos) && back.isVisible()) {
       //&* Hide game components
       checkerboard.hide();
       back.hide();
 
       //&* Show menu components
+      title.show();
+      start.show();
+      exit.show();
     }
   }
 
@@ -50,8 +53,8 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
 //^ @protected: updateFrame(void)
 void PrototypeWrapper::updateFrame(void) {
   //&* @note: wipe current frame
-  window.clear(green); //! @note: update to a sprite background or the ability
-                       //! to swap backgrounds
+  window.clear(black); //! @note: update to a sprite background or the ability
+                     //! to swap backgrounds
 
   //&* @note: re-draw objects
 
@@ -76,19 +79,25 @@ void PrototypeWrapper::updateFrame(void) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //^ @protected: toggleHighlights(const Vector2f)
 void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
-  //* @def: highlight start button
+  //&* @def: highlight start button
   if (start.inLocalBounds(mousePos) && start.isVisible())
     start.toggleHighlight(true);
   else
     start.toggleHighlight(false);
 
-  //* @def: highlight exit button
+  //&* @def: highlight exit button
   if (exit.inLocalBounds(mousePos) && exit.isVisible())
     exit.toggleHighlight(true);
   else
     exit.toggleHighlight(false);
 
-  //* @def: highlight tiles
+  //&* @def: highlight back button
+  if (back.inLocalBounds(mousePos) && back.isVisible())
+    back.toggleHighlight(true);
+  else
+    back.toggleHighlight(false);
+
+  //&* @def: highlight tiles
   checkerboard.toggleHighlight(mousePos);
 
   return;
@@ -101,23 +110,18 @@ void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
 PrototypeWrapper::PrototypeWrapper(const string window_title,
                                    const Vector2f dimensions)
     : window(VideoMode::getDesktopMode(), window_title, Style::Fullscreen),
-      window_dimensions(dimensions), title(window_title, green), start("start"),
+      window_dimensions(dimensions), title(window_title), start("start"),
       exit("exit"), back("back"), checkerboard({725, 200}) {
   //&* @def: Initialize RenderWindow
-
-  //&* FrameCap = 120
-  window.setFramerateLimit(120);
-
-  //&* KeyRepeatEnabled = true
-  window.setKeyRepeatEnabled(true);
-
-  //&* MouseCursorVisible = true
-  window.setMouseCursorVisible(true);
+  window.setFramerateLimit(120);      //&* FrameCap = 120
+  window.setKeyRepeatEnabled(true);   //&* KeyRepeatEnabled = true
+  window.setMouseCursorVisible(true); //&* MouseCursorVisible = true
 
   //&* @def: Init RenderWindow Components
 
   //&* checkerboard
   checkerboard.hide();
+  checkerboard.setPattern(red, white);
 
   //&* textboxes
   title.resize(150);

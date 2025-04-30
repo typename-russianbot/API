@@ -3,7 +3,7 @@
 // TODO: Resources
 ////////////////////////////////////////////////////////////////////////////////////////
 //* @public: Board()
-Board::Board(const Vector2f position) : color1(white), color2(black) {
+Board::Board(const Vector2f position) : colorA(white), colorB(black) {
   float x = position.x, y = position.y, xOffset = 0, yOffset = 0;
 
   for (int i = 0; i < 8; i++) {
@@ -13,14 +13,14 @@ Board::Board(const Vector2f position) : color1(white), color2(black) {
 
       if (i % 2 == 0) {
         if (j % 2 == 0)
-          tiles[i][j].setBackgroundColor(color1);
+          tiles[i][j].setBackgroundColor(colorA);
         else
-          tiles[i][j].setBackgroundColor(color2);
+          tiles[i][j].setBackgroundColor(colorB);
       } else {
         if (j % 2 != 0)
-          tiles[i][j].setBackgroundColor(color1);
+          tiles[i][j].setBackgroundColor(colorA);
         else
-          tiles[i][j].setBackgroundColor(color2);
+          tiles[i][j].setBackgroundColor(colorB);
       }
       yOffset += 150;
     }
@@ -104,22 +104,22 @@ void Board::resize(const unsigned int) { return; }
 ////////////////////////////////////////////////////////////////////////////////////////
 //* @public: invert(void)
 void Board::invert(void) {
-  Color temp = color1;
-  color1 = color2;
-  color2 = temp;
+  Color temp = colorA;
+  colorA = colorB;
+  colorB = temp;
 
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 8; j++) {
       if (i % 2 == 0) {
         if (j % 2 == 0)
-          tiles[i][j].setBackgroundColor(color1);
+          tiles[i][j].setBackgroundColor(colorA);
         else
-          tiles[i][j].setBackgroundColor(color2);
+          tiles[i][j].setBackgroundColor(colorB);
       } else {
         if (j % 2 != 0)
-          tiles[i][j].setBackgroundColor(color1);
+          tiles[i][j].setBackgroundColor(colorA);
         else
-          tiles[i][j].setBackgroundColor(color2);
+          tiles[i][j].setBackgroundColor(colorB);
       }
     }
   }
@@ -130,7 +130,44 @@ void Board::invert(void) {
 
 // TODO: Mutators
 ////////////////////////////////////////////////////////////////////////////////////////
+//&* @public: setPattern(const Color, const Color)
+void Board::setPattern(const Color A, const Color B) {
+  colorA = A;
+  colorB = B;
+
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j < 8; j++) {
+      if (i % 2 == 0) {
+        if (j % 2 == 0)
+          tiles[i][j].setBackgroundColor(colorA);
+        else
+          tiles[i][j].setBackgroundColor(colorB);
+      } else {
+        if (j % 2 != 0)
+          tiles[i][j].setBackgroundColor(colorA);
+        else
+          tiles[i][j].setBackgroundColor(colorB);
+      }
+    }
+  }
+
+  return; 
+}
+////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////
+//* @public: setColorA(const Color)
+void Board::setColorA(const Color color) {
+  colorA = color;
+  return;
+}
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 //* @public: setPosition(const Vector2f)
+void Board::setColorB(const Color color) {
+  colorB = color;
+  return;
+}
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //* @public: toggleHighlight(const Vector2f)

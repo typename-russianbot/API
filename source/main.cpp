@@ -2,7 +2,7 @@
 
 // TODO: Prototype
 int prototype() {
-  PrototypeWrapper driver("Prototype Program Title");
+  PrototypeWrapper driver("Checkers [Prototype]");
   driver.run();
   return 0;
 }
