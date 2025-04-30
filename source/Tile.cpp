@@ -100,7 +100,8 @@ void Tile::setPosition(const Vector2f position) {
 //////////////////////////////////////////////////////////////////////////////////
 //* @public: setBackgroundColor(const Color)
 void Tile::setBackgroundColor(const Color color) {
-  rectangle.setFillColor(color);
+  rectangle_color = color; 
+  rectangle.setFillColor(rectangle_color);
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////

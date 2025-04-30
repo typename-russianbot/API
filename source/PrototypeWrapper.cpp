@@ -27,7 +27,7 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
       } else {
         for (int i = 0; i < 8; i++) {
           for (int j = 0; j < 8; j++) {
-            tiles[i][j].show();
+            tiles[i][j].hide();
           }
         }
       }
@@ -49,7 +49,7 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
 //^ @protected: updateFrame(void)
 void PrototypeWrapper::updateFrame(void) {
   //&* @note: wipe current frame
-  window.clear(black);
+  window.clear(blue);
 
   //&* @note: re-draw objects
   title.draw(window);
@@ -111,13 +111,14 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
   window.setMouseCursorVisible(true); //* @note: Enable Mouse Cursor Visibility
 
   //&* @def: Initialize Objects
-  //* Board Tiles
-  float x = 500, y = 500;
+  //* Board Tiles || @note: x-axis = i, y-axis = j
+  float x = 200, y = 200, xOffset = 0, yOffset = 0;
 
-  //* rows
   for (int i = 0; i < 8; i++) {
-    //* cols
     for (int j = 0; j < 8; j++) {
+      //* resize, setPos, setColor
+      tiles[i][j].resize(100);
+      tiles[i][j].setPosition({x + xOffset, y + yOffset});
       if (i % 2 == 0) {
         if (j % 2 == 0)
           tiles[i][j].setBackgroundColor(white);
@@ -129,7 +130,12 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
         else
           tiles[i][j].setBackgroundColor(black);
       }
+
+      yOffset += 150;
     }
+
+    yOffset = 0;
+    xOffset += 150;
   }
 
   //* program title
