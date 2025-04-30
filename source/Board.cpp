@@ -1,10 +1,37 @@
 #include "../includes/Objects/Board.h"
-#include <SFML/Graphics/RenderWindow.hpp>
 
 // TODO: Resources
 ////////////////////////////////////////////////////////////////////////////////////////
 //* @public: Board()
-Board::Board(void) { return; }
+Board::Board(const Vector2f position) : color1(white), color2(black) {
+
+  float x = position.x, y = position.y, xOffset = 0, yOffset = 0;
+
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j < 8; j++) {
+      tiles[i][j].resize(100);
+      tiles[i][j].setPosition({x + xOffset, y + yOffset});
+
+      if (i % 2 == 0) {
+        if (j % 2 == 0)
+          tiles[i][j].setBackgroundColor(color1);
+        else
+          tiles[i][j].setBackgroundColor(color2);
+      } else {
+        if (j % 2 != 0)
+          tiles[i][j].setBackgroundColor(color1);
+        else
+          tiles[i][j].setBackgroundColor(color2);
+      }
+      yOffset += 150;
+    }
+
+    yOffset = 0;
+    xOffset += 150;
+  }
+
+  return;
+}
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //* @public: ~Board(void)
@@ -28,7 +55,22 @@ void Board::draw(RenderWindow &window) {
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //* @public: move(const Vector2f)
-void Board::move(const Vector2f position) { return; }
+void Board::move(const Vector2f position) {
+  float x = position.x, y = position.y, xOffset = 0, yOffset = 0;
+
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j < 8; j++) {
+      tiles[i][j].setPosition({x + xOffset, y + yOffset});
+
+      yOffset += 150;
+    }
+
+    yOffset = 0;
+    xOffset += 150;
+  }
+
+  return;
+}
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //* @public: show(void)
@@ -67,13 +109,53 @@ void Board::invert(void) {
   color1 = color2;
   color2 = temp;
 
-
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j < 8; j++) {
+      if (i % 2 == 0) {
+        if (j % 2 == 0)
+          tiles[i][j].setBackgroundColor(color1);
+        else
+          tiles[i][j].setBackgroundColor(color2);
+      } else {
+        if (j % 2 != 0)
+          tiles[i][j].setBackgroundColor(color1);
+        else
+          tiles[i][j].setBackgroundColor(color2);
+      }
+    }
+  }
 
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 
 // TODO: Mutators
+////////////////////////////////////////////////////////////////////////////////////////
+//* @public: toggleHighlight(const bool)
+void Board::toggleHighlight(const bool toggle) { return; }
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+//* @public: toggleVisible(const bool)
+void Board::toggleVisible(const bool toggle) {
+  if (toggle) {
+    board_visible = true;
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 8; j++) {
+        tiles[i][j].show();
+      }
+    }
+  } else {
+    board_visible = false; 
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 8; j++) {
+        tiles[i][j].hide();
+      }
+    }
+  }
+
+  return;
+}
+////////////////////////////////////////////////////////////////////////////////////////
 
 // TODO: Accessors
 ////////////////////////////////////////////////////////////////////////////////////////
