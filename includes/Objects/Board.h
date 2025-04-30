@@ -25,7 +25,7 @@ protected:
 public:
   // TODO: Resources
   ////////////////////////////////////////////////////////////////////////////////////////
-  //* @public: Board(void)
+  //* @public: Board(const unsigned int)
   //* @def: constructor
 
   Board(void);
