@@ -17,13 +17,13 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
     //&* @note: start button clicked | jump to game screen
     if (start.inLocalBounds(mousePos) && start.isVisible()) {
       //&* Hide menu components
-      title.hide();
-      start.hide();
-      exit.hide();
+      title.toggleVisible(false);
+      start.toggleVisible(false);
+      exit.toggleVisible(false);
 
       //&* Show game components
-      checkerboard.show();
-      back.show();
+      checkerboard.toggleVisible(true);
+      back.toggleVisible(true);
     }
 
     //&* @note: exit button clicked
@@ -35,13 +35,13 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
     //&* @note: back button clicked | jump back to menu screen
     if (back.inLocalBounds(mousePos) && back.isVisible()) {
       //&* Hide game components
-      checkerboard.hide();
-      back.hide();
+      checkerboard.toggleVisible(false);
+      back.toggleVisible(false);
 
       //&* Show menu components
-      title.show();
-      start.show();
-      exit.show();
+      title.toggleVisible(true);
+      start.toggleVisible(true);
+      exit.toggleVisible(true);
     }
   }
 
@@ -54,7 +54,7 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
 void PrototypeWrapper::updateFrame(void) {
   //&* @note: wipe current frame
   window.clear(black); //! @note: update to a sprite background or the ability
-                     //! to swap backgrounds
+                       //! to swap backgrounds
 
   //&* @note: re-draw objects
 
@@ -111,7 +111,8 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
                                    const Vector2f dimensions)
     : window(VideoMode::getDesktopMode(), window_title, Style::Fullscreen),
       window_dimensions(dimensions), title(window_title), start("start"),
-      exit("exit"), back("back"), checkerboard({725, 200}) {
+      settings("settings"), exit("exit"), back("back"),
+      checkerboard({725, 200}), highlight_color(red) {
   //&* @def: Initialize RenderWindow
   window.setFramerateLimit(120);      //&* FrameCap = 120
   window.setKeyRepeatEnabled(true);   //&* KeyRepeatEnabled = true
@@ -120,7 +121,7 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
   //&* @def: Init RenderWindow Components
 
   //&* checkerboard
-  checkerboard.hide();
+  checkerboard.toggleVisible(false);
   checkerboard.setPattern(red, white);
 
   //&* textboxes
@@ -129,16 +130,16 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
   //&* buttons
   start.resize(35);
   start.setPosition({1280, 940});
-  start.setHighlightColor(yellow);
+  start.setHighlightColor(highlight_color);
 
   exit.resize(35);
   exit.setPosition({1280, 1015});
-  exit.setHighlightColor(yellow);
+  exit.setHighlightColor(highlight_color);
 
   back.resize(35);
   back.setPosition({100, 1340});
-  back.setHighlightColor(yellow);
-  back.hide();
+  back.setHighlightColor(highlight_color);
+  back.toggleVisible(false);
 
   return;
 }

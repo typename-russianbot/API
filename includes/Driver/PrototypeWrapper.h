@@ -11,11 +11,21 @@ private:
   Vector2f window_dimensions; //&* @var: window_dimensions
 
   //&* Components
-  Textbox title;      //&* @var: title
-  Button start;       //&* @var: start
-  Button exit;        //&* @var: exit
-  Button back;        //&* @var: back
+
+  //&* Textboxes
+  Textbox title; //&* @var: title
+
+  //&* Buttons
+  Button start;    //&* @var: start
+  Button settings; //&* @var: settings
+  Button exit;     //&* @var: exit
+  Button back;     //&* @var: back
+
+  //&* Board
   Board checkerboard; //&* @var: checkerboard
+
+  //&* Trackers
+  Color highlight_color; //&* @var: highlight_color
 
 protected:
   // TODO - @protected: Functions

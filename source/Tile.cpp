@@ -1,166 +1,155 @@
 #include "../includes/Objects/Tile.h"
 
-// TODO: Resources
+// TODO - Resources //
 //////////////////////////////////////////////////////////////////////////////////
-//* @public: Tile(const Color, const Vector2f)
+//&* @public: Tile(const Color, const Vector2f)
 Tile::Tile(const Color color, const Vector2f position)
-    : rectangle_color(color), outline_color(transparent),
-      highlight_color(yellow), tile_highlighted(false), tile_visible(true),
-      outline_visible(false) {
+    : object_color(color), outline_color(transparent), highlight_color(yellow),
+      tile_highlighted(false), tile_visible(true), outline_visible(false) {
 
-  //* init rectangle
-  rectangle.setSize({50, 50});
-  rectangle.setOrigin(rectangle.getSize().x / 2.f, rectangle.getSize().y / 2.f);
-  rectangle.setPosition(position);
-  rectangle.setFillColor(rectangle_color);
-  rectangle.setOutlineColor(outline_color);
-  rectangle.setOutlineThickness(3.f);
+  //* init object
+  object.setSize({50, 50});
+  object.setOrigin(object.getSize().x / 2.f, object.getSize().y / 2.f);
+  object.setPosition(position);
+  object.setFillColor(object_color);
+  object.setOutlineColor(outline_color);
+  object.setOutlineThickness(3.f);
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
-//* @public: ~Tile(void)
+//&* @public: ~Tile(void)
 Tile::~Tile(void) { return; }
 //////////////////////////////////////////////////////////////////////////////////
 
-// TODO: Functions
+// TODO - Functions //
 //////////////////////////////////////////////////////////////////////////////////
-//* @public: draw(RenderWindow&)
+//&* @public: draw(RenderWindow&)
 void Tile::draw(RenderWindow &window) {
   if (isVisible()) {
-    window.draw(rectangle);
+    window.draw(object);
   }
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////
-
 //////////////////////////////////////////////////////////////////////////////////
-//* @public: move(const Vector2f)
+//&* @public: move(const Vector2f)
 void Tile::move(const Vector2f position) {
-  rectangle.move(position);
+  object.move(position);
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////
-
 //////////////////////////////////////////////////////////////////////////////////
-//* @public: show(void)
-void Tile::show(void) {
-  //? @note: don't alter outline_visible
-  tile_visible = true;
-  rectangle.setFillColor(rectangle_color);
-  rectangle.setOutlineColor(outline_color);
-  return;
-}
-//////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////
-//* @public: hide(void)
-void Tile::hide(void) {
-  //? @note:
-  tile_visible = false;
-  rectangle.setFillColor(transparent);
-  rectangle.setOutlineColor(transparent);
-
-  return;
-}
-//////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////
-//* @public: resize(const unsigned int)
+//&* @public: resize(const unsigned int)
 void Tile::resize(const unsigned int size) {
-  rectangle.setSize({static_cast<float>(size), static_cast<float>(size)});
+  object.setSize({static_cast<float>(size), static_cast<float>(size)});
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////
-
 //////////////////////////////////////////////////////////////////////////////////
-//* @public: invert(void)
+//&* @public: invert(void)
 void Tile::invert(void) {
   //? @note: swap outline & fill color
-  Color temp = rectangle_color;
-  rectangle_color = outline_color;
+  Color temp = object_color;
+  object_color = outline_color;
   outline_color = temp;
 
-  //? @note: update rectangle
-  rectangle.setFillColor(rectangle_color);
-  rectangle.setOutlineColor(outline_color);
+  //? @note: update object
+  object.setFillColor(object_color);
+  object.setOutlineColor(outline_color);
 
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////
 
-// TODO:  Mutators
+// TODO - Toggles //
 //////////////////////////////////////////////////////////////////////////////////
-//* @public: setPosition(const Vector2f)
+//&* @public: toggleOutline(const bool)
+void Tile::toggleOutline(const bool toggle) {
+  if (toggle) {
+    outline_visible = true;
+    object.setOutlineColor(outline_color);
+  } else {
+    outline_visible = false;
+    object.setOutlineColor(transparent);
+  }
+  return;
+}
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//&* @public: toggleHighlight(const bool)
+void Tile::toggleHighlight(const bool toggle) {
+  if (toggle) {
+    tile_highlighted = true;
+    object.setOutlineColor(highlight_color);
+  } else {
+    tile_highlighted = false;
+    object.setOutlineColor(outline_color);
+  }
+
+  return;
+}
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//&* @public: toggleVisible(const bool)
+void Tile::toggleVisible(const bool toggle) {
+  if (toggle) {
+    tile_visible = true;
+    object.setFillColor(object_color);
+    object.setOutlineColor(outline_color);
+  } else {
+    tile_visible = false;
+    object.setFillColor(transparent);
+    object.setOutlineColor(transparent);
+  }
+
+  return;
+}
+///////////////////////////////////////////////////////////////////////////////////
+
+// TODO - Mutators //
+//////////////////////////////////////////////////////////////////////////////////
+//&* @public: setPosition(const Vector2f)
 void Tile::setPosition(const Vector2f position) {
-  rectangle.setPosition(position);
+  object.setPosition(position);
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
-//* @public: setBackgroundColor(const Color)
+//&* @public: setOutlineThickness(const float)
+void Tile::setOutlineThickness(const float thickness) {
+  object.setOutlineThickness(thickness);
+  return;
+}
+//////////////////////////////////////////////////////////////////////////////////s
+//////////////////////////////////////////////////////////////////////////////////
+//&* @public: setBackgroundColor(const Color)
 void Tile::setBackgroundColor(const Color color) {
-  rectangle_color = color; 
-  rectangle.setFillColor(rectangle_color);
+  object_color = color;
+  object.setFillColor(object_color);
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////
-
 //////////////////////////////////////////////////////////////////////////////////
-//* @public: setOutlineColor(const Color)
+//&* @public: setOutlineColor(const Color)
 void Tile::setOutlineColor(const Color color) {
-  rectangle.setOutlineColor(color);
+  object.setOutlineColor(color);
   outline_visible = true;
 
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
-//* @public: setOutlineThickness(const float)
-void Tile::setOutlineThickness(const float thickness) {
-  rectangle.setOutlineThickness(thickness);
-  return;
-}
-//////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////
-//* @public: toggleOutline(const bool)
-void Tile::toggleOutline(const bool toggle) {
-  if (toggle) {
-    outline_visible = true;
-    rectangle.setOutlineColor(outline_color);
-  } else {
-    outline_visible = false;
-    rectangle.setOutlineColor(transparent);
-  }
-  return;
-}
-//////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////
-//* @public: setHighlightColor(const Color)
+//&* @public: setHighlightColor(const Color)
 void Tile::setHighlightColor(const Color color) {
   highlight_color = color;
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////
-//* @public: toggleHighlight(const bool)
-void Tile::toggleHighlight(const bool toggle) {
-  if (toggle) {
-    tile_highlighted = true;
-    rectangle.setOutlineColor(highlight_color);
-  } else {
-    tile_highlighted = false;
-    rectangle.setOutlineColor(outline_color);
-  }
 
-  return;
-}
+// TODO - Accessors //
 //////////////////////////////////////////////////////////////////////////////////
-
-// TODO: Accessors
-//////////////////////////////////////////////////////////////////////////////////
-//* @public: isVisible(void)
+//&* @public: isVisible(void)
 bool Tile::isVisible(void) {
   if (tile_visible)
     return true;
@@ -169,7 +158,7 @@ bool Tile::isVisible(void) {
 }
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
-//* @public: isHighlighted(void)
+//&* @public: isHighlighted(void)
 bool Tile::isHighlighted(void) {
   if (tile_highlighted)
     return true;
@@ -178,14 +167,11 @@ bool Tile::isHighlighted(void) {
 }
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
-//* @public: inLocalBounds(const Vector2f)
+//&* @public: inLocalBounds(const Vector2f)
 bool Tile::inLocalBounds(const Vector2f position) {
-  if (rectangle.getGlobalBounds().contains(position))
+  if (object.getGlobalBounds().contains(position))
     return true;
 
   return false;
 }
-//////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////
-//* @public:
 //////////////////////////////////////////////////////////////////////////////////
