@@ -7,8 +7,6 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
   //? @note: Close Window
   if (event.type == Event::Closed)
     window.close();
-  if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
-    window.close();
 
   //? @note: Mouse Button Pressed
   if (event.type == sf::Event::MouseButtonPressed &&
@@ -19,10 +17,23 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
       //&* Hide menu components
       title.toggleVisible(false);
       start.toggleVisible(false);
+      settings.toggleVisible(false);
       exit.toggleVisible(false);
 
       //&* Show game components
       checkerboard.toggleVisible(true);
+      back.toggleVisible(true);
+    }
+
+    //&* @note: settings button clicked | jump to settings screen
+    if (settings.inLocalBounds(mousePos) && start.isVisible()) {
+      //&* Hide menu components
+      title.toggleVisible(false);
+      start.toggleVisible(false);
+      settings.toggleVisible(false);
+      exit.toggleVisible(false);
+
+      //&* Show settings components
       back.toggleVisible(true);
     }
 
@@ -34,13 +45,14 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
 
     //&* @note: back button clicked | jump back to menu screen
     if (back.inLocalBounds(mousePos) && back.isVisible()) {
-      //&* Hide game components
+      //* Hide game components
       checkerboard.toggleVisible(false);
       back.toggleVisible(false);
 
-      //&* Show menu components
+      //* Show menu components
       title.toggleVisible(true);
       start.toggleVisible(true);
+      settings.toggleVisible(true);
       exit.toggleVisible(true);
     }
   }
@@ -63,6 +75,7 @@ void PrototypeWrapper::updateFrame(void) {
 
   //&* buttons
   start.draw(window);
+  settings.draw(window);
   exit.draw(window);
   back.draw(window);
 
@@ -85,6 +98,12 @@ void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
   else
     start.toggleHighlight(false);
 
+  //&* @def: highlight settings button
+  if (settings.inLocalBounds(mousePos) && settings.isVisible())
+    settings.toggleHighlight(true);
+  else
+    settings.toggleHighlight(false);
+
   //&* @def: highlight exit button
   if (exit.inLocalBounds(mousePos) && exit.isVisible())
     exit.toggleHighlight(true);
@@ -106,7 +125,7 @@ void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
 
 // TODO - @public: Resources
 //////////////////////////////////////////////////////////////////////////////////////////
-//* @public: PrototypeWrapper()
+//&* @public: PrototypeWrapper()
 PrototypeWrapper::PrototypeWrapper(const string window_title,
                                    const Vector2f dimensions)
     : window(VideoMode::getDesktopMode(), window_title, Style::Fullscreen),
@@ -132,8 +151,12 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
   start.setPosition({1280, 940});
   start.setHighlightColor(highlight_color);
 
+  settings.resize(35);
+  settings.setPosition({1280, 1040});
+  settings.setHighlightColor(highlight_color);
+
   exit.resize(35);
-  exit.setPosition({1280, 1015});
+  exit.setPosition({1280, 1140});
   exit.setHighlightColor(highlight_color);
 
   back.resize(35);
@@ -144,15 +167,14 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////////////
-
 //////////////////////////////////////////////////////////////////////////////////////////
-//* @public: ~PrototypeWrapper()
+//&* @public: ~PrototypeWrapper()
 PrototypeWrapper::~PrototypeWrapper(void) { return; }
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // TODO - @public: Functions
 //////////////////////////////////////////////////////////////////////////////////////////
-//* @public: run(void)
+//&* @public: run(void)
 void PrototypeWrapper::run(void) {
   //* @note: initialize RenderWindow
   while (window.isOpen()) {
@@ -171,8 +193,4 @@ void PrototypeWrapper::run(void) {
 
   return;
 }
-//////////////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////////////
-//* @public:
 //////////////////////////////////////////////////////////////////////////////////////////
