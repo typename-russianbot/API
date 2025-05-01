@@ -1,6 +1,7 @@
 #pragma once
 #include "../Objects/Board.h"
 #include "../Objects/Button.h"
+#include "../Objects/Pawn.h"
 #include "../Objects/Textbox.h"
 
 //& Class - PrototypeWrapper
@@ -23,6 +24,7 @@ private:
 
   //&* Board
   Board checkerboard; //&* @var: checkerboard
+  Pawn pawn;
 
   //&* Trackers
   Color highlight_color; //&* @var: highlight_color

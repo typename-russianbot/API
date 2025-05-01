@@ -60,7 +60,6 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////////////
-
 //////////////////////////////////////////////////////////////////////////////////////////
 //^ @protected: updateFrame(void)
 void PrototypeWrapper::updateFrame(void) {
@@ -79,6 +78,9 @@ void PrototypeWrapper::updateFrame(void) {
   exit.draw(window);
   back.draw(window);
 
+  //&* testers
+  pawn.draw(window);
+
   //&* checkerboard
   checkerboard.draw(window);
 
@@ -88,7 +90,6 @@ void PrototypeWrapper::updateFrame(void) {
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////////////
-
 //////////////////////////////////////////////////////////////////////////////////////////
 //^ @protected: toggleHighlights(const Vector2f)
 void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
@@ -131,7 +132,7 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
     : window(VideoMode::getDesktopMode(), window_title, Style::Fullscreen),
       window_dimensions(dimensions), title(window_title), start("start"),
       settings("settings"), exit("exit"), back("back"),
-      checkerboard({725, 200}), highlight_color(red) {
+      checkerboard({725, 200}), pawn(white, 50), highlight_color(red) {
   //&* @def: Initialize RenderWindow
   window.setFramerateLimit(120);      //&* FrameCap = 120
   window.setKeyRepeatEnabled(true);   //&* KeyRepeatEnabled = true
@@ -139,26 +140,33 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
 
   //&* @def: Init RenderWindow Components
 
+  pawn.setPosition({1280, 720});
+
   //&* checkerboard
   checkerboard.toggleVisible(false);
   checkerboard.setPattern(red, white);
 
   //&* textboxes
+  //* @note: title textbox
   title.resize(150);
 
   //&* buttons
+  //* @note: start button
   start.resize(35);
   start.setPosition({1280, 940});
   start.setHighlightColor(highlight_color);
 
+  //* @note: settings button
   settings.resize(35);
   settings.setPosition({1280, 1040});
   settings.setHighlightColor(highlight_color);
 
+  //* @note: exit button
   exit.resize(35);
   exit.setPosition({1280, 1140});
   exit.setHighlightColor(highlight_color);
 
+  //* @note: back button
   back.resize(35);
   back.setPosition({100, 1340});
   back.setHighlightColor(highlight_color);

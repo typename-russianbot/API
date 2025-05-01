@@ -2,7 +2,8 @@
 
 // TODO - Resources //
 //////////////////////////////////////////////////////////////////////////////////
-//&* @public: Tile(const Color, const Vector2f)
+//&* @public: Tile(const Color, const Vector2f) | should we alter position to
+//size?
 Tile::Tile(const Color color, const Vector2f position)
     : object_color(color), outline_color(transparent), highlight_color(yellow),
       tile_highlighted(false), tile_visible(true), outline_visible(false) {
