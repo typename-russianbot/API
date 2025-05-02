@@ -9,8 +9,8 @@ Pawn::Pawn(const Color color, const unsigned int size)
       pawn_higlighted(false), pawn_visible(true), outline_visible(false) {
 
   //&* Init Pawn
-  object.setPointCount(5);
-  object.setOrigin({object.getScale().x / 2.f, object.getScale().y / 2.f});
+  object.setPointCount(object.getRadius());
+  object.setOrigin({object.getRadius() / 2.f, object.getRadius() / 2.f});
   object.setPosition({_DisplayWidth / 2.f, _DisplayHeight / 2.f});
   object.setFillColor(pawn_color);
   object.setOutlineColor(outline_color);
@@ -113,6 +113,14 @@ void Pawn::toggleVisible(const bool toggle) {
 
 // TODO - Mutators //
 ////////////////////////////////////////////////////////////////////////////////////////
+//&* @public: setOrigin(const Vector2f)
+void Pawn::setOrigin(const Vector2f origin) {
+  object.setOrigin(origin);
+  return;
+}
+////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////
 // &* @public: setPosition(const Vector2f)
 void Pawn::setPosition(const Vector2f position) {
   object.setPosition(position);
@@ -166,5 +174,10 @@ bool Pawn::isHighlighted(void) { return false; }
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 // &* @public: inLocalBounds(const Vector2f)
-bool Pawn::inLocalBounds(const Vector2f mousePos) { return false; }
+bool Pawn::inLocalBounds(const Vector2f mousePos) {
+  if (object.getGlobalBounds().contains(mousePos))
+    return true;
+
+  return false;
+}
 ////////////////////////////////////////////////////////////////////////////////////////

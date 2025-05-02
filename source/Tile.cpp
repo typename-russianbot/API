@@ -3,7 +3,7 @@
 // TODO - Resources //
 //////////////////////////////////////////////////////////////////////////////////
 //&* @public: Tile(const Color, const Vector2f) | should we alter position to
-//size?
+// size?
 Tile::Tile(const Color color, const Vector2f position)
     : object_color(color), outline_color(transparent), highlight_color(yellow),
       tile_highlighted(false), tile_visible(true), outline_visible(false) {
@@ -110,6 +110,13 @@ void Tile::toggleVisible(const bool toggle) {
 
 // TODO - Mutators //
 //////////////////////////////////////////////////////////////////////////////////
+//&* @public: setOrigin(const Vector2f)
+void Tile::setOrigin(const Vector2f origin) {
+  object.setOrigin(origin);
+  return;
+}
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 //&* @public: setPosition(const Vector2f)
 void Tile::setPosition(const Vector2f position) {
   object.setPosition(position);
@@ -150,6 +157,18 @@ void Tile::setHighlightColor(const Color color) {
 
 // TODO - Accessors //
 //////////////////////////////////////////////////////////////////////////////////
+//&* @public: getOrigin(void)
+
+const Vector2f Tile::getOrigin(void) { return object.getOrigin(); }
+//////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////
+//&* @public: getPosition(void)
+const Vector2f Tile::getPosition(void) { return object.getPosition(); }
+//////////////////////////////////////////////////////////////////////////////////
+
+// TODO - Switches //
+//////////////////////////////////////////////////////////////////////////////////
 //&* @public: isVisible(void)
 bool Tile::isVisible(void) {
   if (tile_visible)
@@ -174,5 +193,28 @@ bool Tile::inLocalBounds(const Vector2f position) {
     return true;
 
   return false;
+}
+//////////////////////////////////////////////////////////////////////////////////
+
+// TODO - Overloads //
+//////////////////////////////////////////////////////////////////////////////////
+//&* @public: operator=(const Tile&)
+Tile &Tile::operator=(const Tile &other) {
+  this->object_color = other.object_color;
+  this->outline_color = other.outline_color;
+  this->highlight_color = other.highlight_color;
+  this->tile_highlighted = other.tile_highlighted;
+  this->tile_visible = other.tile_visible;
+  this->outline_visible = other.outline_visible;
+
+  //* init object
+  this->object.setSize(other.object.getSize());
+  this->object.setOrigin(other.object.getOrigin());
+  this->object.setPosition(other.object.getPosition());
+  this->object.setFillColor(object_color);
+  this->object.setOutlineColor(outline_color);
+  this->object.setOutlineThickness(other.object.getOutlineThickness());
+
+  return *this; 
 }
 //////////////////////////////////////////////////////////////////////////////////

@@ -8,7 +8,7 @@ private:
   CircleShape object; //&* @var: object
 
   //&* Trackers
-  Color pawn_color;    //&* @var: object_color
+  Color pawn_color;      //&* @var: object_color
   Color outline_color;   //&* @var: outline_color
   Color highlight_color; //&* @var: highlight_color
   bool pawn_higlighted;  //&* @var: pawn_highlighted
@@ -76,6 +76,13 @@ public:
   ////////////////////////////////////////////////////////////////////////////////////////
 
   // TODO - Mutators //
+  ////////////////////////////////////////////////////////////////////////////////////////
+  //&* @public: setOrigin(const Vector2f)
+  //* @def: sets object origin
+
+  void setOrigin(const Vector2f);
+  ////////////////////////////////////////////////////////////////////////////////////////
+
   ////////////////////////////////////////////////////////////////////////////////////////
   //&* @public: setPosition(const Vector2f)
   //* @def: sets object position

@@ -8,8 +8,9 @@
 class PrototypeWrapper {
 private:
   //&* RenderWindow
-  RenderWindow window;        //&* @var: window
-  Vector2f window_dimensions; //&* @var: window_dimensions
+  RenderWindow window;             //&* @var: window
+  ContextSettings window_settings; //&* @var: window_settings
+  Vector2f window_dimensions;      //&* @var: window_dimensions
 
   //&* Components
 

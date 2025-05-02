@@ -1,4 +1,6 @@
 #include "../includes/Driver/PrototypeWrapper.h"
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Window/ContextSettings.hpp>
 
 // TODO - @protected: Functions
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -22,6 +24,7 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
 
       //&* Show game components
       checkerboard.toggleVisible(true);
+      pawn.toggleVisible(true);
       back.toggleVisible(true);
     }
 
@@ -48,6 +51,7 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
       //* Hide game components
       checkerboard.toggleVisible(false);
       back.toggleVisible(false);
+      pawn.toggleVisible(false);
 
       //* Show menu components
       title.toggleVisible(true);
@@ -78,12 +82,11 @@ void PrototypeWrapper::updateFrame(void) {
   exit.draw(window);
   back.draw(window);
 
-  //&* testers
-  pawn.draw(window);
-
   //&* checkerboard
   checkerboard.draw(window);
 
+  //&* testers
+  pawn.draw(window);
   //&* @note: display updated frame
   window.display();
 
@@ -132,7 +135,7 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
     : window(VideoMode::getDesktopMode(), window_title, Style::Fullscreen),
       window_dimensions(dimensions), title(window_title), start("start"),
       settings("settings"), exit("exit"), back("back"),
-      checkerboard({725, 200}), pawn(white, 50), highlight_color(red) {
+      checkerboard({725, 175}), pawn(white, 35), highlight_color(red) {
   //&* @def: Initialize RenderWindow
   window.setFramerateLimit(120);      //&* FrameCap = 120
   window.setKeyRepeatEnabled(true);   //&* KeyRepeatEnabled = true
@@ -140,11 +143,19 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
 
   //&* @def: Init RenderWindow Components
 
-  pawn.setPosition({1280, 720});
-
   //&* checkerboard
   checkerboard.toggleVisible(false);
   checkerboard.setPattern(red, white);
+
+  Tile pos = checkerboard.getCell(0, 1);
+  cout << pos.getOrigin().x << ", " << pos.getOrigin().y << endl;
+  cout << pos.getPosition().x << ", " << pos.getPosition().y << endl;
+
+  pawn.setPosition({pos.getPosition().x + 8.f, pos.getPosition().y + 8.f});
+  pawn.setOutlineColor(red);
+  pawn.setBackgroundColor(black);
+  pawn.invert();
+  pawn.toggleVisible(false);
 
   //&* textboxes
   //* @note: title textbox
