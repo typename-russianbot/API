@@ -15,10 +15,8 @@ private:
 
   //&* Components
 
-  //&* Textboxes
-  Textbox title; //&* @var: title
-
-  //&* Buttons
+  //&* Textboxes & Buttons
+  Textbox title;   //&* @var: title
   Button start;    //&* @var: start
   Button settings; //&* @var: settings
   Button exit;     //&* @var: exit

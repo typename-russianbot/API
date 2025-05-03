@@ -31,6 +31,7 @@ Player::Player(Board &checkerboard, const Color color)
           pawn++;
         } else if (i % 2 != 0 && j % 2 != 0) {
           cell = checkerboard.getCell({i, j});
+
           pawns[pawn].setPosition(
               {cell.getPosition().x + 12.f, cell.getPosition().y + 12.f});
           pawn++;
@@ -43,11 +44,13 @@ Player::Player(Board &checkerboard, const Color color)
 
       for (unsigned int j = 0; j < 8; j++) {
         if (i % 2 == 0 && j % 2 == 0) {
+          checkerboard.setActive({i, j});
           cell = checkerboard.getCell({i, j});
           pawns[pawn].setPosition(
               {cell.getPosition().x + 12.f, cell.getPosition().y + 12.f});
           pawn++;
         } else if (i % 2 != 0 && j % 2 != 0) {
+          checkerboard.setActive({i, j});
           cell = checkerboard.getCell({i, j});
           pawns[pawn].setPosition(
               {cell.getPosition().x + 12.f, cell.getPosition().y + 12.f});
@@ -78,7 +81,7 @@ void Player::draw(RenderWindow &window) {
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: movePawn(cosnt unsigned int, const Vector2f)
 void Player::movePawn(const unsigned int pawn, const Vector2f pos) {
-  pawns[pawn].move(pos);
+  pawns[pawn].setPosition({pos.x + 12.f, pos.y + 12.f});
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -140,7 +143,14 @@ void Player::setPawnColor(const Color color) {
 
 // TODO - Accessors //
 ////////////////////////////////////////////////////////////////////////////////////////
+//&* @public: getPawn(const unsigned int)
+Pawn Player::getPawn(const unsigned int cell){
+  return pawns[cell]; 
+}
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: getPawnsRemaining(void)
+unsigned int Player::getPawnsRemaining(void) { return remaining_pawns; }
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: getPawnColor(void)

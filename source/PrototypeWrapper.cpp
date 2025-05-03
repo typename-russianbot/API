@@ -28,7 +28,7 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
     }
 
     // TODO - @note: settings button clicked | jump to settings screen
-    if (settings.inLocalBounds(mousePos) && start.isVisible()) {
+    if (settings.inLocalBounds(mousePos) && settings.isVisible()) {
       //&* Hide menu components
       title.toggleVisible(false);
       start.toggleVisible(false);
@@ -58,6 +58,9 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
       start.toggleVisible(true);
       settings.toggleVisible(true);
       exit.toggleVisible(true);
+    }
+
+    if (checkerboard.inLocalBounds(mousePos) && checkerboard.isVisible()) {
     }
   }
 
@@ -148,6 +151,8 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
   checkerboard.toggleVisible(false);
   checkerboard.setPattern(red, white);
   checkerboard.resize(125);
+  Tile tile = checkerboard.getCell({3, 0});
+  player1.movePawn(0, tile.getPosition());
 
   //&* textboxes
   //* @note: title textbox

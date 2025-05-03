@@ -8,6 +8,7 @@ Board::Board(const Vector2f position) : colorA(white), colorB(black) {
 
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 8; j++) {
+      // active_tiles[i][j] = false;
       tiles[i][j].resize(100);
       tiles[i][j].setPosition({x + xOffset, y + yOffset});
 
@@ -175,6 +176,13 @@ void Board::setPattern(const Color A, const Color B) {
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+//&* @public: setActive(const Vector2u)
+void Board::setActive(const Vector2u cell) {
+  active_tiles[cell.x][cell.y] = true;
+  return;
+}
+////////////////////////////////////////////////////////////////////////////////////////
 
 // TODO - Accessors //
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -182,11 +190,31 @@ void Board::setPattern(const Color A, const Color B) {
 const Tile Board::getCell(const Vector2u cell) { return tiles[cell.x][cell.y]; }
 ////////////////////////////////////////////////////////////////////////////////////////
 
+// TODO - Switches //
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: isVisible(void)
 bool Board::isVisible() {
   if (board_visible)
     return true;
+
+  return false;
+}
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+//&* @public: inLocalBounds(const Vector2f)
+bool Board::inLocalBounds(const Vector2f mousePos) {
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j < 8; j++) {
+      if (tiles[i][j].inLocalBounds(mousePos) && isVisible()) {
+        if (active_tiles[i][j] == true) {
+          cout << "active tile at: " << i << ", " << j << endl;
+        }
+        cout << "flargblarm" << endl; 
+
+        return true;
+      }
+    }
+  }
 
   return false;
 }
