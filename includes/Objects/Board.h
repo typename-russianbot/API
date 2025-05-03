@@ -82,7 +82,7 @@ public:
   //&* @public: getCell(const Vector2u)
   //* @def: returns requested cell
 
-  const Tile getCell(const Vector2u) const;
+  const Tile getCell(const Vector2u);
   ////////////////////////////////////////////////////////////////////////////////////////
 
   // TODO - Switches //
