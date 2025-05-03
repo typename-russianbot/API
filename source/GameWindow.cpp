@@ -6,14 +6,9 @@
 GameWindow::GameWindow(void)
     : checkerboard({725, 175}), player1(checkerboard, blue),
       player2(checkerboard, yellow), highlight(yellow), visible(false) {
-
-  //&* checkerboard
   toggleVisible(false);
   checkerboard.setPattern(red, white);
   checkerboard.resize(125);
-  Tile tile = checkerboard.getCell({3, 0});
-  player1.movePawn(0, tile.getPosition());
-
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -26,12 +21,9 @@ GameWindow::~GameWindow(void) { return; }
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: draw(RenderWindow&)
 void GameWindow::draw(RenderWindow &window) {
-  if (visible) {
-    checkerboard.draw(window);
-    player1.draw(window);
-    player2.draw(window);
-  }
-
+  checkerboard.draw(window);
+  player1.draw(window);
+  player2.draw(window);
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -65,7 +57,6 @@ void GameWindow::toggleVisible(const bool toggle) {
     player2.toggleVisible(false);
     visible = false;
   }
-
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////

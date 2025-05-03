@@ -46,91 +46,76 @@ MainWindow::~MainWindow(void) { return; }
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: draw(RenderWindow&) -- done
 void MainWindow::draw(RenderWindow &window) {
-  if (isVisible()) {
-    title.draw(window);
-    start.draw(window);
-    settings.draw(window);
-    back.draw(window);
-    exit.draw(window);
-  }
+  title.draw(window);
+  start.draw(window);
+  settings.draw(window);
+  back.draw(window);
+  exit.draw(window);
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: highlights(const Vector2f)
 void MainWindow::highlights(const Vector2f mousePos) {
-
-  //&* @def: highlight start button
+  //* ++ start ++ *//
   if (start.inLocalBounds(mousePos) && start.isVisible())
     start.toggleHighlight(true);
   else
     start.toggleHighlight(false);
-
-  //&* @def: highlight settings button
+  //* ++ settings ++ *//
   if (settings.inLocalBounds(mousePos) && settings.isVisible())
     settings.toggleHighlight(true);
   else
     settings.toggleHighlight(false);
-
-  //&* @def: highlight back button
+  //* ++ back ++ *//
   if (back.inLocalBounds(mousePos) && back.isVisible())
     back.toggleHighlight(true);
   else
     back.toggleHighlight(false);
-
-  //&* @def: highlight exit button
+  //* ++ exit ++ *//
   if (exit.inLocalBounds(mousePos) && exit.isVisible())
     exit.toggleHighlight(true);
   else
     exit.toggleHighlight(false);
-
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: events
 int MainWindow::events(const Vector2f mousePos, RenderWindow &window) {
-  // TODO - @note: start button clicked | jump to game screen
+  // TODO - @note: start button clicked | jump to game
   if (start.inLocalBounds(mousePos) && start.isVisible()) {
     title.toggleVisible(false);
     start.toggleVisible(false);
     settings.toggleVisible(false);
     exit.toggleVisible(false);
     back.toggleVisible(true);
-
     return _start;
   }
-
-  // TODO - @note: settings button clicked | jump to settings screen
+  // TODO - @note: settings button clicked | jump to settings
   if (settings.inLocalBounds(mousePos) && settings.isVisible()) {
     title.toggleVisible(false);
     start.toggleVisible(false);
     settings.toggleVisible(false);
     exit.toggleVisible(false);
     back.toggleVisible(true);
-
     return _settings;
   }
-
-  // TODO - @note: back button clicked | jump back to menu screen
+  // TODO - @note: back button clicked | jump to menu
   if (back.inLocalBounds(mousePos) && back.isVisible()) {
     title.toggleVisible(true);
     start.toggleVisible(true);
     settings.toggleVisible(true);
     exit.toggleVisible(true);
     back.toggleVisible(false);
-
     return _back;
   }
-
   // TODO - @note: exit button clicked | exit program
   if (exit.inLocalBounds(mousePos) && exit.isVisible()) {
     window.close();
-
     return _exit;
   }
-
-  return -1;
+  return -1; //! @note: something's gone horribly wrong...
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 
