@@ -2,6 +2,7 @@
 #include "../Objects/Board.h"
 #include "../Objects/Button.h"
 #include "../Objects/Pawn.h"
+#include "../Objects/Player.h"
 #include "../Objects/Textbox.h"
 
 //& Class - PrototypeWrapper
@@ -25,7 +26,9 @@ private:
 
   //&* Board
   Board checkerboard; //&* @var: checkerboard
-  Pawn pawn;
+
+  //&* Players
+  Player player1; //&* @var: player1
 
   //&* Trackers
   Color highlight_color; //&* @var: highlight_color

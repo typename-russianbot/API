@@ -1,14 +1,6 @@
 #pragma once
 #include "Tile.h"
 
-// //& Struct - Pattern
-// struct Pattern {
-//   //&* Components
-//   Color colorA; //&* @var: colorA
-//   Color colorB; //&* @var: colorB
-
-//   //&* Functions
-// };
 
 //& Class - Board
 //? @note: reset origin for easier positioning
@@ -88,10 +80,10 @@ public:
 
   // TODO - Accessors //
   ////////////////////////////////////////////////////////////////////////////////////////
-  //&* @public: getCell(const unsigned int, const unsigned int)
+  //&* @public: getCell(const Vector2u)
   //* @def: returns requested cell
 
-  Tile getCell(const unsigned int, const unsigned int);
+  Tile getCell(const Vector2u);
   ////////////////////////////////////////////////////////////////////////////////////////
 
   ////////////////////////////////////////////////////////////////////////////////////////

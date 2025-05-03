@@ -3,7 +3,7 @@ CXX = g++
 CXX_FLAGS = -g -Wall -Wextra -std=c++17 
 
 # Program Settings #
-SOURCE = source/main.cpp source/master.cpp source/TextBox.cpp source/Tile.cpp source/Button.cpp source/Board.cpp source/Player.cpp source/Pawn.cpp source/PrototypeWrapper.cpp # Source Files #
+SOURCE = source/main.cpp source/master.cpp source/Board.cpp source/Tile.cpp source/Pawn.cpp source/TextBox.cpp source/Button.cpp source/Player.cpp source/PrototypeWrapper.cpp # Source Files #
 OBJECTS = $(patsubst source/%.cpp, build/%.o, $(SOURCE)) # Object Files #
 BUILD = build # Build Files #
 SFML_LIBS = -lsfml-graphics -lsfml-window -lsfml-system # Dependencies #
