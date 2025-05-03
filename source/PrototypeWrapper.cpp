@@ -8,19 +8,15 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
   if (event.type == Event::Closed)
     window.close();
 
+  //&* @note: left mouse button pressed
   if (event.type == sf::Event::MouseButtonPressed &&
       event.mouseButton.button == Mouse::Left) {
-    int button = main_window.events(mousePos, window);
+    int button = menu.events(mousePos, window);
 
-    if (button == 1) {
-      checkerboard.toggleVisible(true);
-      player1.toggleVisible(true);
-      player2.toggleVisible(true);
-    } else if (button == 3) {
-      checkerboard.toggleVisible(false);
-      player1.toggleVisible(false);
-      player2.toggleVisible(false);
-    }
+    if (button == 1)
+      game.toggleVisible(true);
+    else if (button == 3)
+      game.toggleVisible(false);
   }
   return;
 }
@@ -33,14 +29,10 @@ void PrototypeWrapper::updateFrame(void) {
                        //! to swap backgrounds
 
   //&* MainWindow
-  main_window.draw(window);
+  menu.draw(window);
 
-  //&* checkerboard
-  checkerboard.draw(window);
-
-  //&* players
-  player1.draw(window);
-  player2.draw(window);
+  //&* GameWindow
+  game.draw(window);
 
   //&* @note: display updated frame
   window.display();
@@ -49,12 +41,13 @@ void PrototypeWrapper::updateFrame(void) {
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
-//^ @protected: toggleHighlights(const Vector2f)
+//^ @protected: pollHighlights(const Vector2f)
 void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
-  main_window.highlights(mousePos);
+  if (menu.isVisible())
+    menu.highlights(mousePos);
 
-  //&* @def: highlight tiles
-  checkerboard.toggleHighlight(mousePos);
+  if (game.isVisible())
+    game.highlights(mousePos);
 
   return;
 }
@@ -66,22 +59,11 @@ void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
 PrototypeWrapper::PrototypeWrapper(const string window_title,
                                    const Vector2f dimensions)
     : window(VideoMode::getDesktopMode(), window_title, Style::Fullscreen),
-      window_dimensions(dimensions), main_window(window_title),
-      checkerboard({725, 175}), player1(checkerboard, blue),
-      player2(checkerboard, yellow), highlight_color(red) {
+      window_dimensions(dimensions), menu(window_title), game() {
   //&* @def: Initialize RenderWindow
   window.setFramerateLimit(90);       //&* FrameCap = 90
   window.setKeyRepeatEnabled(true);   //&* KeyRepeatEnabled = true
   window.setMouseCursorVisible(true); //&* MouseCursorVisible = true
-
-  //&* @def: Init RenderWindow Components
-
-  //&* checkerboard -- static, we never need to make changes to the board
-  checkerboard.toggleVisible(false);
-  checkerboard.setPattern(red, white);
-  checkerboard.resize(125);
-  Tile tile = checkerboard.getCell({3, 0});
-  player1.movePawn(0, tile.getPosition());
 
   return;
 }

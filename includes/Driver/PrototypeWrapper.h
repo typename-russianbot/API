@@ -1,9 +1,5 @@
 #pragma once
-#include "../Objects/Board.h"
-#include "../Objects/Button.h"
-#include "../Objects/Pawn.h"
-#include "../Objects/Player.h"
-#include "../Objects/Textbox.h"
+#include "../Windows/GameWindow.h"
 #include "../Windows/MainWindow.h"
 
 //& Class - PrototypeWrapper
@@ -14,21 +10,9 @@ private:
   ContextSettings window_settings; //&* @var: window_settings
   Vector2f window_dimensions;      //&* @var: window_dimensions
 
-  //&* MainWindow
-  MainWindow main_window;
-
-  //&* GameWindow
-
-  //&* SettingsWindow
-
-  //&* Board & players
-  Board checkerboard; //&* @var: checkerboard
-  Player player1;     //&* @var: player1
-  Player player2;     //&* @var: player2
-
-  //&* Trackers
-  Color highlight_color; //&* @var: highlight_color
-
+  //&* Windows
+  MainWindow menu; //&* @var: menu
+  GameWindow game; //&* @var: game
 protected:
   // TODO - @protected: Functions
   ////////////////////////////////////////////////////////////////////////////////////////
