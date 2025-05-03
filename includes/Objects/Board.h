@@ -1,7 +1,6 @@
 #pragma once
 #include "Tile.h"
 
-
 //& Class - Board
 //? @note: reset origin for easier positioning
 class Board {
@@ -86,6 +85,7 @@ public:
   Tile getCell(const Vector2u);
   ////////////////////////////////////////////////////////////////////////////////////////
 
+  // TODO - Switches //
   ////////////////////////////////////////////////////////////////////////////////////////
   //&* @public: isVisible(void)
   //* @def: true if visible, false otherwise

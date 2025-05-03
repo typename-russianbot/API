@@ -2,7 +2,7 @@
 
 // TODO - Resources //
 ////////////////////////////////////////////////////////////////////////////////////////
-//&* @public: Board()
+//&* @public: Board(const Vector2f)
 Board::Board(const Vector2f position) : colorA(white), colorB(black) {
   float x = position.x, y = position.y, xOffset = 0, yOffset = 0;
 

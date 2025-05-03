@@ -24,11 +24,10 @@ private:
   Button exit;     //&* @var: exit
   Button back;     //&* @var: back
 
-  //&* Board
+  //&* Board & players
   Board checkerboard; //&* @var: checkerboard
-
-  //&* Players
-  Player player1; //&* @var: player1
+  Player player1;     //&* @var: player1
+  Player player2;     //&* @var: player2
 
   //&* Trackers
   Color highlight_color; //&* @var: highlight_color

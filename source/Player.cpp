@@ -4,7 +4,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: Player(Board&, const Color)
 Player::Player(Board &checkerboard, const Color color)
-    : pawns_remaining(12), pawn_color(color) {
+    : remaining_pawns(12), pawn_color(color) {
 
   toggleStatus(true);
 
@@ -17,29 +17,44 @@ Player::Player(Board &checkerboard, const Color color)
   }
 
   //&* @def: set pawn positions
+  int pawn = 0;
 
-  for (unsigned int i = 0; i < 3; i++) {    
-    Tile cell;   
+  if (color == black) {
+    for (unsigned int i = 0; i < 3; i++) {
+      Tile cell;
 
-    for (unsigned int j = 0; j < 4; j++) {
-        Tile cell = checkerboard.getCell({i, j});         
+      for (unsigned int j = 0; j < 8; j++) {
+        if (i % 2 == 0 && j % 2 == 0) {
+          cell = checkerboard.getCell({i, j});
+          pawns[pawn].setPosition(
+              {cell.getPosition().x + 8.f, cell.getPosition().y + 8.f});
+          pawn++;
+        } else if (i % 2 != 0 && j % 2 != 0) {
+          cell = checkerboard.getCell({i, j});
+          pawns[pawn].setPosition(
+              {cell.getPosition().x + 8.f, cell.getPosition().y + 8.f});
+          pawn++;
+        }
+      }
     }
-  }
+  } else {
+    for (unsigned int i = 5; i < 8; i++) {
+      Tile cell;
 
-
-  for (unsigned int i = 0; i < 6; i++) {
-    Tile cell;
-    cell = checkerboard.getCell({0, i});
-    // if (i % 2 == 0) {
-    //   cell = checkerboard.getCell({0, i});
-    // } else {
-    //   cell = checkerboard.getCell({0, i + 1});
-    // }
-
-    cout << "pawn: " << i << endl;
-    pawns[i].toggleVisible(true);
-    pawns[i].setPosition(
-        {cell.getPosition().x + 8.f, cell.getPosition().y + 8.f});
+      for (unsigned int j = 0; j < 8; j++) {
+        if (i % 2 == 0 && j % 2 == 0) {
+          cell = checkerboard.getCell({i, j});
+          pawns[pawn].setPosition(
+              {cell.getPosition().x + 8.f, cell.getPosition().y + 8.f});
+          pawn++;
+        } else if (i % 2 != 0 && j % 2 != 0) {
+          cell = checkerboard.getCell({i, j});
+          pawns[pawn].setPosition(
+              {cell.getPosition().x + 8.f, cell.getPosition().y + 8.f});
+          pawn++;
+        }
+      }
+    }
   }
 }
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +68,7 @@ Player::~Player(void) { return; }
 //&* @public: draw(RenderWindow&)
 void Player::draw(RenderWindow &window) {
   for (auto i = 0; i < 12; i++) {
-    if (pawns_active[i])
+    if (active_pawns[i])
       pawns[i].draw(window);
   }
 
@@ -64,6 +79,15 @@ void Player::draw(RenderWindow &window) {
 //&* @public: movePawn(cosnt unsigned int, const Vector2f)
 void Player::movePawn(const unsigned int pawn, const Vector2f pos) {
   pawns[pawn].move(pos);
+  return;
+}
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+//&* @public: removePawn(const int)
+void Player::removePawn(const int cell) {
+  active_pawns[cell] = false;
+  remaining_pawns--;
+
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -101,11 +125,11 @@ void Player::togglePawnVisible(const unsigned int pawn, const bool toggle) {
 void Player::toggleStatus(const bool toggle) {
   if (toggle) {
     for (int i = 0; i < 12; i++) {
-      pawns_active[i] = true;
+      active_pawns[i] = true;
     }
   } else {
     for (auto i = 0; i < 12; i++) {
-      pawns_active[i] = false;
+      active_pawns[i] = false;
     }
   }
 
@@ -116,9 +140,9 @@ void Player::toggleStatus(const bool toggle) {
 //&* @public: togglePawnStatus(const unsigned int pawn, const bool)
 void Player::togglePawnStatus(const unsigned int pawn, const bool toggle) {
   if (toggle) {
-    pawns_active[pawn] = true;
+    active_pawns[pawn] = true;
   } else {
-    pawns_active[pawn] = false;
+    active_pawns[pawn] = false;
   }
 
   return;

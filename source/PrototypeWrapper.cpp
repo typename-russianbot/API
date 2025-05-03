@@ -4,11 +4,11 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 //^ @protected: pollEvents(const Event, const Vector2f)
 void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
-  //? @note: Close Window
+  //&* @note: close window
   if (event.type == Event::Closed)
     window.close();
 
-  //? @note: Mouse Button Pressed
+  //&* @note: left mouse button pressed
   if (event.type == sf::Event::MouseButtonPressed &&
       event.mouseButton.button == Mouse::Left) {
 
@@ -22,11 +22,12 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
 
       //&* Show game components
       checkerboard.toggleVisible(true);
-      player1.toggleVisible(true); 
+      player1.toggleVisible(true);
+      player2.toggleVisible(true);
       back.toggleVisible(true);
     }
 
-    //&* @note: settings button clicked | jump to settings screen
+    // TODO - @note: settings button clicked | jump to settings screen
     if (settings.inLocalBounds(mousePos) && start.isVisible()) {
       //&* Hide menu components
       title.toggleVisible(false);
@@ -48,7 +49,8 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
     if (back.inLocalBounds(mousePos) && back.isVisible()) {
       //* Hide game components
       checkerboard.toggleVisible(false);
-      player1.toggleVisible(false); 
+      player1.toggleVisible(false);
+      player2.toggleVisible(false);
       back.toggleVisible(false);
 
       //* Show menu components
@@ -69,8 +71,6 @@ void PrototypeWrapper::updateFrame(void) {
   window.clear(black); //! @note: update to a sprite background or the ability
                        //! to swap backgrounds
 
-  //&* @note: re-draw objects
-
   //&* textboxes
   title.draw(window);
 
@@ -82,9 +82,10 @@ void PrototypeWrapper::updateFrame(void) {
 
   //&* checkerboard
   checkerboard.draw(window);
-  player1.draw(window);
 
-  //&* testers
+  //&* players
+  player1.draw(window);
+  player2.draw(window);
 
   //&* @note: display updated frame
   window.display();
@@ -135,9 +136,9 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
       window_dimensions(dimensions), title(window_title), start("start"),
       settings("settings"), exit("exit"), back("back"),
       checkerboard({725, 175}), player1(checkerboard, blue),
-      highlight_color(red) {
+      player2(checkerboard, black), highlight_color(red) {
   //&* @def: Initialize RenderWindow
-  window.setFramerateLimit(120);      //&* FrameCap = 120
+  window.setFramerateLimit(90);       //&* FrameCap = 90
   window.setKeyRepeatEnabled(true);   //&* KeyRepeatEnabled = true
   window.setMouseCursorVisible(true); //&* MouseCursorVisible = true
 
@@ -146,8 +147,6 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
   //&* checkerboard -- static, we never need to make changes to the board
   checkerboard.toggleVisible(false);
   checkerboard.setPattern(red, white);
-
-  Tile pos = checkerboard.getCell({0, 0});
 
   //&* textboxes
   //* @note: title textbox
@@ -187,17 +186,17 @@ PrototypeWrapper::~PrototypeWrapper(void) { return; }
 //////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: run(void)
 void PrototypeWrapper::run(void) {
-  //* @note: initialize RenderWindow
+  //&* @note: initialize RenderWindow
   while (window.isOpen()) {
     Event event;
     Vector2f mousePos = static_cast<Vector2f>(Mouse::getPosition());
 
-    //* @note: event polling
+    //&* @note: event polling
     while (window.pollEvent(event)) {
       pollEvents(event, mousePos);
     }
 
-    //* @note: highlight buttons & update frame
+    //&* @note: highlight buttons & update frame
     pollHighlights(mousePos);
     updateFrame();
   }
