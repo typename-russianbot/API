@@ -10,16 +10,16 @@ Player::Player(Board &checkerboard, const Color color)
 
   //&* @def: define pawn properties
   for (auto i = 0; i < 12; i++) {
-    pawns[i].setRadius(35);
-    pawns[i].setOutlineColor(white);
-    pawns[i].setBackgroundColor(pawn_color);
+    pawns[i].setRadius(50);
+    pawns[i].setOutlineColor(pawn_color);
+    pawns[i].setBackgroundColor(black);
     pawns[i].toggleVisible(false);
   }
 
   //&* @def: set pawn positions
   int pawn = 0;
 
-  if (color == black) {
+  if (color == blue) {
     for (unsigned int i = 0; i < 3; i++) {
       Tile cell;
 
@@ -27,12 +27,12 @@ Player::Player(Board &checkerboard, const Color color)
         if (i % 2 == 0 && j % 2 == 0) {
           cell = checkerboard.getCell({i, j});
           pawns[pawn].setPosition(
-              {cell.getPosition().x + 8.f, cell.getPosition().y + 8.f});
+              {cell.getPosition().x + 12.f, cell.getPosition().y + 12.f});
           pawn++;
         } else if (i % 2 != 0 && j % 2 != 0) {
           cell = checkerboard.getCell({i, j});
           pawns[pawn].setPosition(
-              {cell.getPosition().x + 8.f, cell.getPosition().y + 8.f});
+              {cell.getPosition().x + 12.f, cell.getPosition().y + 12.f});
           pawn++;
         }
       }
@@ -45,12 +45,12 @@ Player::Player(Board &checkerboard, const Color color)
         if (i % 2 == 0 && j % 2 == 0) {
           cell = checkerboard.getCell({i, j});
           pawns[pawn].setPosition(
-              {cell.getPosition().x + 8.f, cell.getPosition().y + 8.f});
+              {cell.getPosition().x + 12.f, cell.getPosition().y + 12.f});
           pawn++;
         } else if (i % 2 != 0 && j % 2 != 0) {
           cell = checkerboard.getCell({i, j});
           pawns[pawn].setPosition(
-              {cell.getPosition().x + 8.f, cell.getPosition().y + 8.f});
+              {cell.getPosition().x + 12.f, cell.getPosition().y + 12.f});
           pawn++;
         }
       }
@@ -68,7 +68,7 @@ Player::~Player(void) { return; }
 //&* @public: draw(RenderWindow&)
 void Player::draw(RenderWindow &window) {
   for (auto i = 0; i < 12; i++) {
-    if (active_pawns[i])
+    if (active_pawns[i] == true)
       pawns[i].draw(window);
   }
 
@@ -110,17 +110,6 @@ void Player::toggleVisible(const bool toggle) {
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
-//&* @public: togglePawnVisible(const bool)
-void Player::togglePawnVisible(const unsigned int pawn, const bool toggle) {
-  if (toggle)
-    pawns[pawn].toggleVisible(true);
-  else
-    pawns[pawn].toggleVisible(false);
-
-  return;
-}
-////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: toggleStatus(const bool)
 void Player::toggleStatus(const bool toggle) {
   if (toggle) {
@@ -131,18 +120,6 @@ void Player::toggleStatus(const bool toggle) {
     for (auto i = 0; i < 12; i++) {
       active_pawns[i] = false;
     }
-  }
-
-  return;
-}
-////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////
-//&* @public: togglePawnStatus(const unsigned int pawn, const bool)
-void Player::togglePawnStatus(const unsigned int pawn, const bool toggle) {
-  if (toggle) {
-    active_pawns[pawn] = true;
-  } else {
-    active_pawns[pawn] = false;
   }
 
   return;
@@ -162,6 +139,9 @@ void Player::setPawnColor(const Color color) {
 ////////////////////////////////////////////////////////////////////////////////////////
 
 // TODO - Accessors //
+////////////////////////////////////////////////////////////////////////////////////////
+//&* @public: getPawnsRemaining(void)
+////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: getPawnColor(void)
 Color Player::getPawnColor(void) { return pawn_color; }

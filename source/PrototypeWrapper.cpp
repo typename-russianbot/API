@@ -136,7 +136,7 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
       window_dimensions(dimensions), title(window_title), start("start"),
       settings("settings"), exit("exit"), back("back"),
       checkerboard({725, 175}), player1(checkerboard, blue),
-      player2(checkerboard, black), highlight_color(red) {
+      player2(checkerboard, yellow), highlight_color(red) {
   //&* @def: Initialize RenderWindow
   window.setFramerateLimit(90);       //&* FrameCap = 90
   window.setKeyRepeatEnabled(true);   //&* KeyRepeatEnabled = true
@@ -147,6 +147,7 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
   //&* checkerboard -- static, we never need to make changes to the board
   checkerboard.toggleVisible(false);
   checkerboard.setPattern(red, white);
+  checkerboard.resize(125);
 
   //&* textboxes
   //* @note: title textbox

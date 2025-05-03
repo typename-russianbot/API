@@ -61,19 +61,27 @@ void Board::move(const Vector2f position) {
     for (int j = 0; j < 8; j++) {
       tiles[i][j].setPosition({x + xOffset, y + yOffset});
 
-      yOffset += 150;
+      yOffset += tiles[i][j].getSize() + 50.f;
     }
 
     yOffset = 0;
-    xOffset += 150;
+    xOffset += tiles[i][i].getSize() + 50.f;
   }
 
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
-//&* @public: resize(const unsigned int)
-void Board::resize(const unsigned int) { return; }
+//&* @public: resize(const float)
+void Board::resize(const float size) {
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j < 8; j++) {
+      tiles[i][j].setSize(size);
+    }
+  }
+
+  return;
+}
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: invert(void)
@@ -171,7 +179,9 @@ void Board::setPattern(const Color A, const Color B) {
 // TODO - Accessors //
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: getCell(const Vector2u)
-Tile Board::getCell(const Vector2u cell) { return tiles[cell.x][cell.y]; }
+const Tile Board::getCell(const Vector2u cell) const {
+  return tiles[cell.x][cell.y];
+}
 ////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////

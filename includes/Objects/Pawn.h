@@ -124,7 +124,7 @@ public:
   //&* @public: getRadius(void)
   //* @def: return object radius
 
-  const float getRadius(void);
+  float getRadius(void);
   ////////////////////////////////////////////////////////////////////////////////////////
 
   // TODO - Switches //
