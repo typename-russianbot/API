@@ -45,9 +45,7 @@ void GameWindow::highlights(const Vector2f mousePos) {
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: events(const Vector2f, RenderWindow&)
 void GameWindow::events(const Vector2f mousePos, RenderWindow &window) {
-  Tile tile = checkerboard.getCell({3, 4}); 
-
-  player1.movePawn(0, tile.getPosition());
+  //? @note: Handle selectOrigin/selectDestination methods for the grid here
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -57,15 +55,15 @@ void GameWindow::events(const Vector2f mousePos, RenderWindow &window) {
 //&* @public: toggleVisible(const bool)
 void GameWindow::toggleVisible(const bool toggle) {
   if (toggle) {
-    visible = true;
     checkerboard.toggleVisible(true);
     player1.toggleVisible(true);
     player2.toggleVisible(true);
+    visible = true;
   } else {
-    visible = false;
     checkerboard.toggleVisible(false);
     player1.toggleVisible(false);
     player2.toggleVisible(false);
+    visible = false;
   }
 
   return;

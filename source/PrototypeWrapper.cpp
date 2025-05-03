@@ -6,24 +6,27 @@
 void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
 
   ///////////////////////////////////////////////////////////////////////////////
-  //&* @note: close window
+  //&* @note: window closed
   if (event.type == Event::Closed)
     window.close();
   ///////////////////////////////////////////////////////////////////////////////
 
   ///////////////////////////////////////////////////////////////////////////////
-  //&* @note: left mouse button pressed
-  if (event.type == sf::Event::MouseButtonPressed &&
-      event.mouseButton.button == Mouse::Left) {
+  //&* @note: key pressed
+  if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
+    window.close();
+  ///////////////////////////////////////////////////////////////////////////////
 
-    /////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////
+  //&* @note: left mouse pressed
+  if (event.type == Event::MouseButtonPressed &&
+      event.mouseButton.button == Mouse::Left) {
     int menu_button = menu.events(mousePos, window);
+
     if (menu_button == _start)
       game.toggleVisible(true);
-
     else if (menu_button == _back)
       game.toggleVisible(false);
-    /////////////////////////////////////////////////////////
 
     game.events(mousePos, window);
   }
@@ -75,17 +78,15 @@ PrototypeWrapper::~PrototypeWrapper(void) { return; }
 //////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: run(void)
 void PrototypeWrapper::run(void) {
-
   while (window.isOpen()) {
-
     Event event;
     Vector2f mousePos = static_cast<Vector2f>(Mouse::getPosition());
 
     while (window.pollEvent(event)) {
       pollEvents(event, mousePos);
+      pollHighlights(mousePos);
     }
 
-    pollHighlights(mousePos);
     updateFrame();
   }
   return;
