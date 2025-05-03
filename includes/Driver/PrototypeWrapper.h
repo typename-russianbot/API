@@ -4,6 +4,7 @@
 #include "../Objects/Pawn.h"
 #include "../Objects/Player.h"
 #include "../Objects/Textbox.h"
+#include "../Windows/MainWindow.h"
 
 //& Class - PrototypeWrapper
 class PrototypeWrapper {
@@ -13,14 +14,12 @@ private:
   ContextSettings window_settings; //&* @var: window_settings
   Vector2f window_dimensions;      //&* @var: window_dimensions
 
-  //&* Components
+  //&* MainWindow
+  MainWindow main_window;
 
-  //&* Textboxes & Buttons
-  Textbox title;   //&* @var: title
-  Button start;    //&* @var: start
-  Button settings; //&* @var: settings
-  Button exit;     //&* @var: exit
-  Button back;     //&* @var: back
+  //&* GameWindow
+
+  //&* SettingsWindow
 
   //&* Board & players
   Board checkerboard; //&* @var: checkerboard

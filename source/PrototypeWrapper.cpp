@@ -8,62 +8,20 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
   if (event.type == Event::Closed)
     window.close();
 
-  //&* @note: left mouse button pressed
   if (event.type == sf::Event::MouseButtonPressed &&
       event.mouseButton.button == Mouse::Left) {
+    int button = main_window.events(mousePos, window);
 
-    //&* @note: start button clicked | jump to game screen
-    if (start.inLocalBounds(mousePos) && start.isVisible()) {
-      //&* Hide menu components
-      title.toggleVisible(false);
-      start.toggleVisible(false);
-      settings.toggleVisible(false);
-      exit.toggleVisible(false);
-
-      //&* Show game components
+    if (button == 1) {
       checkerboard.toggleVisible(true);
       player1.toggleVisible(true);
       player2.toggleVisible(true);
-      back.toggleVisible(true);
-    }
-
-    // TODO - @note: settings button clicked | jump to settings screen
-    if (settings.inLocalBounds(mousePos) && settings.isVisible()) {
-      //&* Hide menu components
-      title.toggleVisible(false);
-      start.toggleVisible(false);
-      settings.toggleVisible(false);
-      exit.toggleVisible(false);
-
-      //&* Show settings components
-      back.toggleVisible(true);
-    }
-
-    //&* @note: exit button clicked
-    if (exit.inLocalBounds(mousePos) && exit.isVisible()) {
-      window.close();
-      return;
-    }
-
-    //&* @note: back button clicked | jump back to menu screen
-    if (back.inLocalBounds(mousePos) && back.isVisible()) {
-      //* Hide game components
+    } else if (button == 3) {
       checkerboard.toggleVisible(false);
       player1.toggleVisible(false);
       player2.toggleVisible(false);
-      back.toggleVisible(false);
-
-      //* Show menu components
-      title.toggleVisible(true);
-      start.toggleVisible(true);
-      settings.toggleVisible(true);
-      exit.toggleVisible(true);
-    }
-
-    if (checkerboard.inLocalBounds(mousePos) && checkerboard.isVisible()) {
     }
   }
-
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -74,14 +32,8 @@ void PrototypeWrapper::updateFrame(void) {
   window.clear(black); //! @note: update to a sprite background or the ability
                        //! to swap backgrounds
 
-  //&* textboxes
-  title.draw(window);
-
-  //&* buttons
-  start.draw(window);
-  settings.draw(window);
-  exit.draw(window);
-  back.draw(window);
+  //&* MainWindow
+  main_window.draw(window);
 
   //&* checkerboard
   checkerboard.draw(window);
@@ -99,29 +51,7 @@ void PrototypeWrapper::updateFrame(void) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //^ @protected: toggleHighlights(const Vector2f)
 void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
-  //&* @def: highlight start button
-  if (start.inLocalBounds(mousePos) && start.isVisible())
-    start.toggleHighlight(true);
-  else
-    start.toggleHighlight(false);
-
-  //&* @def: highlight settings button
-  if (settings.inLocalBounds(mousePos) && settings.isVisible())
-    settings.toggleHighlight(true);
-  else
-    settings.toggleHighlight(false);
-
-  //&* @def: highlight exit button
-  if (exit.inLocalBounds(mousePos) && exit.isVisible())
-    exit.toggleHighlight(true);
-  else
-    exit.toggleHighlight(false);
-
-  //&* @def: highlight back button
-  if (back.inLocalBounds(mousePos) && back.isVisible())
-    back.toggleHighlight(true);
-  else
-    back.toggleHighlight(false);
+  main_window.highlights(mousePos);
 
   //&* @def: highlight tiles
   checkerboard.toggleHighlight(mousePos);
@@ -136,8 +66,7 @@ void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
 PrototypeWrapper::PrototypeWrapper(const string window_title,
                                    const Vector2f dimensions)
     : window(VideoMode::getDesktopMode(), window_title, Style::Fullscreen),
-      window_dimensions(dimensions), title(window_title), start("start"),
-      settings("settings"), exit("exit"), back("back"),
+      window_dimensions(dimensions), main_window(window_title),
       checkerboard({725, 175}), player1(checkerboard, blue),
       player2(checkerboard, yellow), highlight_color(red) {
   //&* @def: Initialize RenderWindow
@@ -153,32 +82,6 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
   checkerboard.resize(125);
   Tile tile = checkerboard.getCell({3, 0});
   player1.movePawn(0, tile.getPosition());
-
-  //&* textboxes
-  //* @note: title textbox
-  title.resize(150);
-
-  //&* buttons
-  //* @note: start button
-  start.resize(35);
-  start.setPosition({1280, 940});
-  start.setHighlightColor(highlight_color);
-
-  //&* @note: settings button
-  settings.resize(35);
-  settings.setPosition({1280, 1040});
-  settings.setHighlightColor(highlight_color);
-
-  //&* @note: exit button
-  exit.resize(35);
-  exit.setPosition({1280, 1140});
-  exit.setHighlightColor(highlight_color);
-
-  //&* @note: back button
-  back.resize(35);
-  back.setPosition({100, 1340});
-  back.setHighlightColor(highlight_color);
-  back.toggleVisible(false);
 
   return;
 }
