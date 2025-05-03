@@ -2,6 +2,7 @@
 
 //& @dependencies: Standard C++ Library
 #include <iostream>
+#include <type_traits>
 using namespace std;
 
 //& @dependencies: SFML 2.6.1 Library
@@ -28,7 +29,7 @@ using namespace sf;
 #define cyan Color::Cyan
 #define yellow Color::Yellow
 
-//&* @macro: window dimensions
+//&* @macro: display dimensions
 #define _DisplayWidth static_cast<float>(VideoMode::getDesktopMode().width)
 #define _DisplayHeight static_cast<float>(VideoMode::getDesktopMode().height)
 
@@ -36,5 +37,8 @@ using namespace sf;
 #define _BungeeSpice "resources/fonts/BungeeSpice-Regular.ttf"
 #define _Kadwa "resources/fonts/Kadwa-Regular.ttf"
 #define _Roboto "resources/fonts/Roboto-Regular.ttf"
+
+//&~ @enum: buttons
+enum buttons { _start, _settings, _back, _exit };
 
 //^ @functions:

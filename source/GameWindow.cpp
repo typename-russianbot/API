@@ -45,6 +45,9 @@ void GameWindow::highlights(const Vector2f mousePos) {
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: events(const Vector2f, RenderWindow&)
 void GameWindow::events(const Vector2f mousePos, RenderWindow &window) {
+  Tile tile = checkerboard.getCell({3, 4}); 
+
+  player1.movePawn(0, tile.getPosition());
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -63,17 +66,6 @@ void GameWindow::toggleVisible(const bool toggle) {
     checkerboard.toggleVisible(false);
     player1.toggleVisible(false);
     player2.toggleVisible(false);
-  }
-
-  return;
-}
-////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////
-//&* @public: toggleHighlights(const bool)
-void GameWindow::toggleHighlights(const bool toggle) {
-  if (toggle) {
-
-  } else {
   }
 
   return;

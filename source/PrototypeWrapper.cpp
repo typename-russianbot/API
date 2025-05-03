@@ -4,37 +4,40 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 //^ @protected: pollEvents(const Event, const Vector2f)
 void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
+
+  ///////////////////////////////////////////////////////////////////////////////
   //&* @note: close window
   if (event.type == Event::Closed)
     window.close();
+  ///////////////////////////////////////////////////////////////////////////////
 
+  ///////////////////////////////////////////////////////////////////////////////
   //&* @note: left mouse button pressed
   if (event.type == sf::Event::MouseButtonPressed &&
       event.mouseButton.button == Mouse::Left) {
-    int button = menu.events(mousePos, window);
 
-    if (button == 1)
+    /////////////////////////////////////////////////////////
+    int menu_button = menu.events(mousePos, window);
+    if (menu_button == _start)
       game.toggleVisible(true);
-    else if (button == 3)
+
+    else if (menu_button == _back)
       game.toggleVisible(false);
+    /////////////////////////////////////////////////////////
+
+    game.events(mousePos, window);
   }
+  ///////////////////////////////////////////////////////////////////////////////
+
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 //^ @protected: updateFrame(void)
 void PrototypeWrapper::updateFrame(void) {
-  //&* @note: wipe current frame
-  window.clear(black); //! @note: update to a sprite background or the ability
-                       //! to swap backgrounds
-
-  //&* MainWindow
+  window.clear(black);
   menu.draw(window);
-
-  //&* GameWindow
   game.draw(window);
-
-  //&* @note: display updated frame
   window.display();
 
   return;
@@ -43,12 +46,8 @@ void PrototypeWrapper::updateFrame(void) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //^ @protected: pollHighlights(const Vector2f)
 void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
-  if (menu.isVisible())
-    menu.highlights(mousePos);
-
-  if (game.isVisible())
-    game.highlights(mousePos);
-
+  menu.highlights(mousePos);
+  game.highlights(mousePos);
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -60,11 +59,10 @@ PrototypeWrapper::PrototypeWrapper(const string window_title,
                                    const Vector2f dimensions)
     : window(VideoMode::getDesktopMode(), window_title, Style::Fullscreen),
       window_dimensions(dimensions), menu(window_title), game() {
-  //&* @def: Initialize RenderWindow
-  window.setFramerateLimit(90);       //&* FrameCap = 90
-  window.setKeyRepeatEnabled(true);   //&* KeyRepeatEnabled = true
-  window.setMouseCursorVisible(true); //&* MouseCursorVisible = true
 
+  window.setFramerateLimit(90);
+  window.setKeyRepeatEnabled(true);
+  window.setMouseCursorVisible(true);
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -77,21 +75,19 @@ PrototypeWrapper::~PrototypeWrapper(void) { return; }
 //////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: run(void)
 void PrototypeWrapper::run(void) {
-  //&* @note: initialize RenderWindow
+
   while (window.isOpen()) {
+
     Event event;
     Vector2f mousePos = static_cast<Vector2f>(Mouse::getPosition());
 
-    //&* @note: event polling
     while (window.pollEvent(event)) {
       pollEvents(event, mousePos);
     }
 
-    //&* @note: highlight buttons & update frame
     pollHighlights(mousePos);
     updateFrame();
   }
-
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////////////

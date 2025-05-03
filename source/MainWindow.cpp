@@ -96,10 +96,9 @@ int MainWindow::events(const Vector2f mousePos, RenderWindow &window) {
     start.toggleVisible(false);
     settings.toggleVisible(false);
     exit.toggleVisible(false);
-
     back.toggleVisible(true);
 
-    return 1;
+    return _start;
   }
 
   // TODO - @note: settings button clicked | jump to settings screen
@@ -108,10 +107,9 @@ int MainWindow::events(const Vector2f mousePos, RenderWindow &window) {
     start.toggleVisible(false);
     settings.toggleVisible(false);
     exit.toggleVisible(false);
-
     back.toggleVisible(true);
 
-    return 2;
+    return _settings;
   }
 
   // TODO - @note: back button clicked | jump back to menu screen
@@ -120,30 +118,20 @@ int MainWindow::events(const Vector2f mousePos, RenderWindow &window) {
     start.toggleVisible(true);
     settings.toggleVisible(true);
     exit.toggleVisible(true);
-
     back.toggleVisible(false);
 
-    return 3;
+    return _back;
   }
 
   // TODO - @note: exit button clicked | exit program
   if (exit.inLocalBounds(mousePos) && exit.isVisible()) {
     window.close();
-    return 4;
+
+    return _exit;
   }
 
   return -1;
 }
-////////////////////////////////////////////////////////////////////////////////////////
-
-// TODO - Mutators/Accessors //
-////////////////////////////////////////////////////////////////////////////////////////
-//&* @public:
-//* @def:
-////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////
-//&* @public:
-//* @def:
 ////////////////////////////////////////////////////////////////////////////////////////
 
 // TODO - Toggles/Switches //
@@ -164,18 +152,6 @@ void MainWindow::toggleVisible(const bool toggle) {
     settings.toggleVisible(false);
     back.toggleVisible(false);
     exit.toggleVisible(false);
-  }
-
-  return;
-}
-////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////
-//&* @public: toggleHighlights(const bool)
-//! @def: implementation req.
-void MainWindow::toggleHighlights(const bool toggle) {
-  if (toggle) {
-
-  } else {
   }
 
   return;
