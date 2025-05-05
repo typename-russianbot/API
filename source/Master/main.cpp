@@ -1,4 +1,4 @@
-#include "../includes/Driver/PrototypeWrapper.h"
+#include "../../includes/Master/PrototypeWrapper.h"
 
 // TODO: Prototype
 int prototype() {

@@ -3,8 +3,8 @@ CXX = g++
 CXX_FLAGS = -g -Wall -Wextra -std=c++17 
 
 # Program Settings #
-SOURCE = source/main.cpp source/master.cpp source/Board.cpp source/Tile.cpp source/Pawn.cpp source/TextBox.cpp source/Button.cpp source/Player.cpp source/PrototypeWrapper.cpp source/Menu.cpp source/Game.cpp source/Settings.cpp # Source Files #
-OBJECTS = $(patsubst source/%.cpp, build/%.o, $(SOURCE)) # Object Files #
+SOURCE := $(shell find source -name '*.cpp') # Auto-Find Source Files #
+OBJECTS := $(patsubst source/%.cpp, build/%.o, $(SOURCE)) # Object Files #
 BUILD = build # Build Files #
 SFML_LIBS = -lsfml-graphics -lsfml-window -lsfml-system # Dependencies #
 TARGET = run # Executable #
@@ -20,5 +20,5 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $(CXX_FLAGS) $(OBJECTS) $(SFML_LIBS) -o $(TARGET) 
 
 build/%.o: source/%.cpp
-	mkdir -p $(BUILD)	
+	mkdir -p $(BUILD) $(dir $@)
 	$(CXX) $(CXX_FLAGS) -c $< -o $@ 
