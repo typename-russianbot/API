@@ -4,7 +4,7 @@
 #include "../Objects/Player.h"
 
 //& Class - GameWindow
-class GameWindow {
+class Game {
 private:
   //&* Components
   Board checkerboard; //&* @var: checkerboard
@@ -21,13 +21,13 @@ public:
   //&* @public: GameWindow(void) == done
   //* @def: constructor
 
-  GameWindow(void);
+  Game(void);
   ////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////
   //&* @public: ~GameWindow(void) == done
   //* @def: destructor
 
-  ~GameWindow(void);
+  ~Game(void);
   ////////////////////////////////////////////////////////////////////////////////////////
 
   // TODO - Functions //

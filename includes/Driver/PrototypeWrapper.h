@@ -1,6 +1,7 @@
 #pragma once
-#include "../Windows/GameWindow.h"
-#include "../Windows/MainWindow.h"
+#include "../Windows/Game.h"
+#include "../Windows/Menu.h"
+#include "../Windows/Options.h"
 
 //& Class - PrototypeWrapper
 class PrototypeWrapper {
@@ -11,9 +12,10 @@ private:
   Vector2f window_dimensions;      //&* @var: window_dimensions
 
   //&* Windows
-  MainWindow menu; //&* @var: menu
-  GameWindow game; //&* @var: game
-  
+  Menu menu;       //&* @var: menu
+  Game game;       //&* @var: game
+  Options options; //&* @var: options
+
 protected:
   // TODO - @protected: Functions
   ////////////////////////////////////////////////////////////////////////////////////////

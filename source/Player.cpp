@@ -25,13 +25,14 @@ Player::Player(Board &checkerboard, const Color color)
 
       for (unsigned int j = 0; j < 8; j++) {
         if (i % 2 == 0 && j % 2 == 0) {
+          checkerboard.setActive({i, j});
           cell = checkerboard.getCell({i, j});
           pawns[pawn].setPosition(
               {cell.getPosition().x + 12.f, cell.getPosition().y + 12.f});
           pawn++;
         } else if (i % 2 != 0 && j % 2 != 0) {
+          checkerboard.setActive({i, j});
           cell = checkerboard.getCell({i, j});
-
           pawns[pawn].setPosition(
               {cell.getPosition().x + 12.f, cell.getPosition().y + 12.f});
           pawn++;
@@ -144,9 +145,7 @@ void Player::setPawnColor(const Color color) {
 // TODO - Accessors //
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: getPawn(const unsigned int)
-Pawn Player::getPawn(const unsigned int cell){
-  return pawns[cell]; 
-}
+Pawn Player::getPawn(const unsigned int cell) { return pawns[cell]; }
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: getPawnsRemaining(void)

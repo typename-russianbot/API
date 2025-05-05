@@ -1,68 +1,90 @@
-#include "../includes/Windows/GameWindow.h"
+#include "../includes/Windows/Options.h"
 
 // TODO - Resources //
 ////////////////////////////////////////////////////////////////////////////////////////
-//&* @public: GameWindow(void)
-GameWindow::GameWindow(void)
-    : checkerboard({725, 175}), player1(checkerboard, blue),
-      player2(checkerboard, yellow), highlight(yellow), visible(false) {
-  toggleVisible(false);
-  checkerboard.setPattern(red, white);
-  checkerboard.resize(125);
+//&* @public: Options(void)
+Options::Options(void)
+    : title("Options"), backgrounds("Backgrounds"), pawns("Pawns"),
+      highlight(red), visible(false) {
+  int button_size = 35;
+
+  //* @note: textboxes
+  title.resize(150);
+  title.setPosition({1280, 300});
+
+  //* @note: buttons
+  backgrounds.resize(button_size);
+  backgrounds.setPosition({1280, 400});
+  backgrounds.setHighlightColor(highlight);
+
+  pawns.resize(button_size);
+  pawns.setPosition({1280, 500});
+  pawns.setHighlightColor(highlight);
+
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
-//&* @public: ~GameWindow(void)
-GameWindow::~GameWindow(void) { return; }
+//&* @public: ~Options(void)
+Options::~Options(void) { return; }
 ////////////////////////////////////////////////////////////////////////////////////////
 
 // TODO - Functions //
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: draw(RenderWindow&)
-void GameWindow::draw(RenderWindow &window) {
-  checkerboard.draw(window);
-  player1.draw(window);
-  player2.draw(window);
+void Options::draw(RenderWindow &window) {
+  title.draw(window);
+  backgrounds.draw(window);
+  pawns.draw(window);
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: highlights(const Vector2f)
-void GameWindow::highlights(const Vector2f mousePos) {
-  checkerboard.toggleHighlight(mousePos);
+void Options::highlights(const Vector2f mousePos) {
+  //* ++ backgrounds ++ *//
+  if (backgrounds.inLocalBounds(mousePos) && isVisible())
+    backgrounds.toggleHighlight(true);
+  else
+    backgrounds.toggleHighlight(false);
+
+  //* ++ pawns ++ *//
+  if (pawns.inLocalBounds(mousePos) && isVisible())
+    pawns.toggleHighlight(true);
+  else
+    pawns.toggleHighlight(false);
+
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: events(const Vector2f, RenderWindow&)
-void GameWindow::events(const Vector2f mousePos, RenderWindow &window) {
-  //? @note: Handle selectOrigin/selectDestination methods for the grid here
-  return;
-}
+void Options::events(const Vector2f, RenderWindow &) { return; }
 ////////////////////////////////////////////////////////////////////////////////////////
 
 // TODO - Toggles/Switches //
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: toggleVisible(const bool)
-void GameWindow::toggleVisible(const bool toggle) {
+void Options::toggleVisible(const bool toggle) {
   if (toggle) {
-    checkerboard.toggleVisible(true);
-    player1.toggleVisible(true);
-    player2.toggleVisible(true);
+    title.toggleVisible(true);
+    backgrounds.toggleVisible(false);
+    pawns.toggleVisible(false);
     visible = true;
+
   } else {
-    checkerboard.toggleVisible(false);
-    player1.toggleVisible(false);
-    player2.toggleVisible(false);
+    title.toggleVisible(false);
+    backgrounds.toggleVisible(false);
+    pawns.toggleVisible(false);
     visible = false;
   }
+
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: isVisible(void)
-bool GameWindow::isVisible(void) {
+bool Options::isVisible(void) {
   if (visible)
     return true;
 

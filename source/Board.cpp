@@ -189,6 +189,21 @@ void Board::setActive(const Vector2u cell) {
 //&* @public: getCell(const Vector2u)
 const Tile Board::getCell(const Vector2u cell) { return tiles[cell.x][cell.y]; }
 ////////////////////////////////////////////////////////////////////////////////////////
+void Board::getActive(void) {
+  int count;
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j < 8; j++) {
+      if (active_tiles[i][j] == true) {
+        count += 1; 
+        cout << "Tile[" << i << "][" << j << "] active" << endl;
+      }
+    }
+  }
+
+cout << "Total Marked Tiles: " << count << endl; 
+
+  return;
+}
 
 // TODO - Switches //
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -209,7 +224,7 @@ bool Board::inLocalBounds(const Vector2f mousePos) {
         if (active_tiles[i][j] == true) {
           cout << "active tile at: " << i << ", " << j << endl;
         }
-        cout << "flargblarm" << endl; 
+        cout << "flargblarm" << endl;
 
         return true;
       }

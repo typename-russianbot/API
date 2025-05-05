@@ -3,12 +3,12 @@
 #include "../Objects/Textbox.h"
 
 //& Class - MainWindow
-class MainWindow {
+class Menu {
 private:
   //&* Components
   Textbox title;   //&* @var: title
   Button start;    //&* @var: start
-  Button settings; //&* @var: settings
+  Button options; //&* @var: settings
   Button back;     //&* @var: back
   Button exit;     //&* @var: exit
 
@@ -22,13 +22,13 @@ public:
   //&* @public: MainWindow(const string) == done
   //* @def: constructor
 
-  MainWindow(const string);
+  Menu(const string);
   ////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////
   //&* @public: ~MainWindow(void) == done
   //* @def: destructor
 
-  ~MainWindow(void);
+  ~Menu(void);
   ////////////////////////////////////////////////////////////////////////////////////////
 
   // TODO - Functions //

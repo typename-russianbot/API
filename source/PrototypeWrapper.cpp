@@ -14,10 +14,14 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
   if (event.type == Event::MouseButtonPressed &&
       event.mouseButton.button == Mouse::Left) {
     int menu_button = menu.events(mousePos, window);
+
+    //* @note: start button was pressed...
     if (menu_button == _start)
       game.toggleVisible(true);
     else if (menu_button == _back)
       game.toggleVisible(false);
+
+    //* @note: game events
     game.events(mousePos, window);
   }
   return;
@@ -27,8 +31,12 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
 //^ @protected: updateFrame(void)
 void PrototypeWrapper::updateFrame(void) {
   window.clear(black);
+
+  //* @note: drawables
   menu.draw(window);
   game.draw(window);
+  options.draw(window);
+
   window.display();
   return;
 }
@@ -48,7 +56,7 @@ void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
 PrototypeWrapper::PrototypeWrapper(const string window_title,
                                    const Vector2f dimensions)
     : window(VideoMode::getDesktopMode(), window_title, Style::Fullscreen),
-      window_dimensions(dimensions), menu(window_title), game() {
+      window_dimensions(dimensions), menu(window_title), game(), options() {
   window.setFramerateLimit(90);
   window.setKeyRepeatEnabled(true);
   window.setMouseCursorVisible(true);

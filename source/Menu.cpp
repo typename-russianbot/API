@@ -1,10 +1,10 @@
-#include "../includes/Windows/MainWindow.h"
+#include "../includes/Windows/Menu.h"
 
 // TODO - Resources //
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: MainWindow(const string) -- done
-MainWindow::MainWindow(const string window_title)
-    : title(window_title), start("start"), settings("settings"), back("back"),
+Menu::Menu(const string window_title)
+    : title(window_title), start("start"), options("options"), back("back"),
       exit("exit"), highlight(red), visible(true) {
 
   //* Textboxes/Buttons
@@ -19,9 +19,9 @@ MainWindow::MainWindow(const string window_title)
   start.setHighlightColor(highlight);
 
   //* @note: settings button
-  settings.resize(button_size);
-  settings.setPosition({1280, 1040});
-  settings.setHighlightColor(highlight);
+  options.resize(button_size);
+  options.setPosition({1280, 1040});
+  options.setHighlightColor(highlight);
 
   //* @note: back button
   back.resize(button_size);
@@ -39,16 +39,16 @@ MainWindow::MainWindow(const string window_title)
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: ~MainWindow(void)
-MainWindow::~MainWindow(void) { return; }
+Menu::~Menu(void) { return; }
 ////////////////////////////////////////////////////////////////////////////////////////
 
 // TODO - Functions //
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: draw(RenderWindow&) -- done
-void MainWindow::draw(RenderWindow &window) {
+void Menu::draw(RenderWindow &window) {
   title.draw(window);
   start.draw(window);
-  settings.draw(window);
+  options.draw(window);
   back.draw(window);
   exit.draw(window);
   return;
@@ -56,17 +56,17 @@ void MainWindow::draw(RenderWindow &window) {
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: highlights(const Vector2f)
-void MainWindow::highlights(const Vector2f mousePos) {
+void Menu::highlights(const Vector2f mousePos) {
   //* ++ start ++ *//
   if (start.inLocalBounds(mousePos) && start.isVisible())
     start.toggleHighlight(true);
   else
     start.toggleHighlight(false);
   //* ++ settings ++ *//
-  if (settings.inLocalBounds(mousePos) && settings.isVisible())
-    settings.toggleHighlight(true);
+  if (options.inLocalBounds(mousePos) && options.isVisible())
+    options.toggleHighlight(true);
   else
-    settings.toggleHighlight(false);
+    options.toggleHighlight(false);
   //* ++ back ++ *//
   if (back.inLocalBounds(mousePos) && back.isVisible())
     back.toggleHighlight(true);
@@ -82,21 +82,21 @@ void MainWindow::highlights(const Vector2f mousePos) {
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: events
-int MainWindow::events(const Vector2f mousePos, RenderWindow &window) {
+int Menu::events(const Vector2f mousePos, RenderWindow &window) {
   // TODO - @note: start button clicked | jump to game
   if (start.inLocalBounds(mousePos) && start.isVisible()) {
     title.toggleVisible(false);
     start.toggleVisible(false);
-    settings.toggleVisible(false);
+    options.toggleVisible(false);
     exit.toggleVisible(false);
     back.toggleVisible(true);
     return _start;
   }
   // TODO - @note: settings button clicked | jump to settings
-  if (settings.inLocalBounds(mousePos) && settings.isVisible()) {
+  if (options.inLocalBounds(mousePos) && options.isVisible()) {
     title.toggleVisible(false);
     start.toggleVisible(false);
-    settings.toggleVisible(false);
+    options.toggleVisible(false);
     exit.toggleVisible(false);
     back.toggleVisible(true);
     return _settings;
@@ -105,7 +105,7 @@ int MainWindow::events(const Vector2f mousePos, RenderWindow &window) {
   if (back.inLocalBounds(mousePos) && back.isVisible()) {
     title.toggleVisible(true);
     start.toggleVisible(true);
-    settings.toggleVisible(true);
+    options.toggleVisible(true);
     exit.toggleVisible(true);
     back.toggleVisible(false);
     return _back;
@@ -122,19 +122,19 @@ int MainWindow::events(const Vector2f mousePos, RenderWindow &window) {
 // TODO - Toggles/Switches //
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: toggleVisible(const bool)
-void MainWindow::toggleVisible(const bool toggle) {
+void Menu::toggleVisible(const bool toggle) {
   if (toggle) {
     visible = true;
     title.toggleVisible(true);
     start.toggleVisible(true);
-    settings.toggleVisible(true);
+    options.toggleVisible(true);
     back.toggleVisible(false);
     exit.toggleVisible(true);
   } else {
     visible = false;
     title.toggleVisible(false);
     start.toggleVisible(false);
-    settings.toggleVisible(false);
+    options.toggleVisible(false);
     back.toggleVisible(false);
     exit.toggleVisible(false);
   }
@@ -144,7 +144,7 @@ void MainWindow::toggleVisible(const bool toggle) {
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: isVisible(void)
-bool MainWindow::isVisible(void) {
+bool Menu::isVisible(void) {
   if (visible)
     return true;
 
