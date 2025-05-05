@@ -7,14 +7,14 @@
 //& Class - MainWindow
 class Menu {
 private:
-  //&* Components
+  // TODO - Components //
   Textbox title;  //&* @var: title
   Button start;   //&* @var: start
   Button options; //&* @var: settings
   Button back;    //&* @var: back
   Button exit;    //&* @var: exit
 
-  //&* Trackers
+  // TODO - Trackers //
   Color highlight; //&* @var: highlight
   bool visible;    //&* @var: visible
 

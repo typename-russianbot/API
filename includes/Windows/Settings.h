@@ -5,15 +5,16 @@
 //& Class - Options
 class Settings {
 private:
-  //&* Components
+  // TODO - Components //
   Textbox title;      //&* @var: title
   Button backgrounds; //&* @var: backgrounds
   Button boards;      //&* @var: boards
   Button pawns;       //&* @var: pawns
 
-  //&* Trackers
+  // TODO - Trackers //
   Color highlight; //&* @var: highlight
   bool visible;    //&* @var: visible
+
 public:
   // TODO - Resources //
   ////////////////////////////////////////////////////////////////////////////////////////

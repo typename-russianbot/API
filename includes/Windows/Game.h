@@ -6,12 +6,12 @@
 //& Class - GameWindow
 class Game {
 private:
-  //&* Components
+  // TODO - Components //
   Board checkerboard; //&* @var: checkerboard
   Player player1;     //&* @var: player1
   Player player2;     //&* @var: player2
 
-  //&* Trackers
+  // TODO - Components //
   Color highlight; // &* @var: highlight
   bool visible;    //&* @var: visible
 
