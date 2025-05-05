@@ -3,11 +3,12 @@
 #include "../Objects/Textbox.h"
 
 //& Class - Options
-class Options {
+class Settings {
 private:
   //&* Components
   Textbox title;      //&* @var: title
   Button backgrounds; //&* @var: backgrounds
+  Button boards;      //&* @var: boards
   Button pawns;       //&* @var: pawns
 
   //&* Trackers
@@ -19,13 +20,13 @@ public:
   //&* @public: Options(void)
   //* @def: constructor
 
-  Options(void);
+  Settings(void);
   ////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////
   //&* @public: ~Options(void)
   //* @def: destructor
 
-  ~Options(void);
+  ~Settings(void);
   ////////////////////////////////////////////////////////////////////////////////////////
 
   // TODO - Functions //
@@ -43,6 +44,7 @@ public:
   ////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////
   //&* @public: events(cosnt Vector2f, RenderWindow&) == done
+  //* @params:
   //* @def: handles events
 
   void events(const Vector2f, RenderWindow &);

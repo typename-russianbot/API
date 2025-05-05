@@ -38,7 +38,7 @@ void Game::highlights(const Vector2f mousePos) {
 //&* @public: events(const Vector2f, RenderWindow&)
 void Game::events(const Vector2f mousePos, RenderWindow &window) {
   //? @note: Handle selectOrigin/selectDestination methods for the grid here
-  checkerboard.getActive();
+
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////

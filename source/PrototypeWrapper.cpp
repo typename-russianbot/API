@@ -13,16 +13,15 @@ void PrototypeWrapper::pollEvents(const Event event, const Vector2f mousePos) {
   //&* @note: ++ left mouse pressed ++
   if (event.type == Event::MouseButtonPressed &&
       event.mouseButton.button == Mouse::Left) {
-    int menu_button = menu.events(mousePos, window);
 
-    //* @note: start button was pressed...
-    if (menu_button == _start)
-      game.toggleVisible(true);
-    else if (menu_button == _back)
-      game.toggleVisible(false);
+    //* @note: menu events
+    menu.events(mousePos, window, game, settings);
 
     //* @note: game events
     game.events(mousePos, window);
+
+    //* @note: option events
+    settings.events(mousePos, window);
   }
   return;
 }
@@ -35,7 +34,7 @@ void PrototypeWrapper::updateFrame(void) {
   //* @note: drawables
   menu.draw(window);
   game.draw(window);
-  options.draw(window);
+  settings.draw(window);
 
   window.display();
   return;
@@ -46,6 +45,7 @@ void PrototypeWrapper::updateFrame(void) {
 void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
   menu.highlights(mousePos);
   game.highlights(mousePos);
+  settings.highlights(mousePos);
   return;
 }
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +56,7 @@ void PrototypeWrapper::pollHighlights(const Vector2f mousePos) {
 PrototypeWrapper::PrototypeWrapper(const string window_title,
                                    const Vector2f dimensions)
     : window(VideoMode::getDesktopMode(), window_title, Style::Fullscreen),
-      window_dimensions(dimensions), menu(window_title), game(), options() {
+      window_dimensions(dimensions), menu(window_title), game(), settings() {
   window.setFramerateLimit(90);
   window.setKeyRepeatEnabled(true);
   window.setMouseCursorVisible(true);

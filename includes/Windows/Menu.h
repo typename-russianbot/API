@@ -1,16 +1,18 @@
 #pragma once
 #include "../Objects/Button.h"
 #include "../Objects/Textbox.h"
+#include "../Windows/Game.h"
+#include "../Windows/Settings.h"
 
 //& Class - MainWindow
 class Menu {
 private:
   //&* Components
-  Textbox title;   //&* @var: title
-  Button start;    //&* @var: start
+  Textbox title;  //&* @var: title
+  Button start;   //&* @var: start
   Button options; //&* @var: settings
-  Button back;     //&* @var: back
-  Button exit;     //&* @var: exit
+  Button back;    //&* @var: back
+  Button exit;    //&* @var: exit
 
   //&* Trackers
   Color highlight; //&* @var: highlight
@@ -45,10 +47,11 @@ public:
   void highlights(const Vector2f);
   ////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////
-  //&* @public: events(const Vector2f, RenderWindow&) == done
-  //* @def: handles events
+  //&* @public: events(const Vector2f, RenderWindow&, Game&, Options&) == done
+  //* @params:
+  //* @def: handles events | function is dependent on params from driver
 
-  int events(const Vector2f, RenderWindow &);
+  void events(const Vector2f, RenderWindow &, Game &, Settings &);
   ////////////////////////////////////////////////////////////////////////////////////////
 
   // TODO - Toggles/Switches //

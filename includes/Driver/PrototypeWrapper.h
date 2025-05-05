@@ -1,7 +1,5 @@
 #pragma once
-#include "../Windows/Game.h"
 #include "../Windows/Menu.h"
-#include "../Windows/Options.h"
 
 //& Class - PrototypeWrapper
 class PrototypeWrapper {
@@ -14,7 +12,7 @@ private:
   //&* Windows
   Menu menu;       //&* @var: menu
   Game game;       //&* @var: game
-  Options options; //&* @var: options
+  Settings settings; //&* @var: options
 
 protected:
   // TODO - @protected: Functions
@@ -43,7 +41,7 @@ public:
   //* @public: PrototypeWrapper(const string, const Vector2f)
   //* @def: constructor
 
-  PrototypeWrapper(const string = "PrototypeWrapper",
+  PrototypeWrapper(const string = "Prototype",
                    const Vector2f = {static_cast<float>(_DisplayWidth),
                                      static_cast<float>(_DisplayHeight)});
   ////////////////////////////////////////////////////////////////////////////////////////

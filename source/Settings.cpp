@@ -1,16 +1,16 @@
-#include "../includes/Windows/Options.h"
+#include "../includes/Windows/Settings.h"
 
 // TODO - Resources //
 ////////////////////////////////////////////////////////////////////////////////////////
-//&* @public: Options(void)
-Options::Options(void)
-    : title("Options"), backgrounds("Backgrounds"), pawns("Pawns"),
+//&* @public: Settings(void)
+Settings::Settings(void)
+    : title("Settings"), backgrounds("Backgrounds"), pawns("Pawns"),
       highlight(red), visible(false) {
   int button_size = 35;
 
   //* @note: textboxes
-  title.resize(150);
-  title.setPosition({1280, 300});
+  title.resize(75);
+  title.setPosition({1280, 200});
 
   //* @note: buttons
   backgrounds.resize(button_size);
@@ -25,23 +25,26 @@ Options::Options(void)
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
-//&* @public: ~Options(void)
-Options::~Options(void) { return; }
+//&* @public: ~Settings(void)
+Settings::~Settings(void) { return; }
 ////////////////////////////////////////////////////////////////////////////////////////
 
 // TODO - Functions //
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: draw(RenderWindow&)
-void Options::draw(RenderWindow &window) {
-  title.draw(window);
-  backgrounds.draw(window);
-  pawns.draw(window);
+void Settings::draw(RenderWindow &window) {
+  if (isVisible()) {
+    title.draw(window);
+    backgrounds.draw(window);
+    pawns.draw(window);
+  }
+
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: highlights(const Vector2f)
-void Options::highlights(const Vector2f mousePos) {
+void Settings::highlights(const Vector2f mousePos) {
   //* ++ backgrounds ++ *//
   if (backgrounds.inLocalBounds(mousePos) && isVisible())
     backgrounds.toggleHighlight(true);
@@ -59,17 +62,17 @@ void Options::highlights(const Vector2f mousePos) {
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: events(const Vector2f, RenderWindow&)
-void Options::events(const Vector2f, RenderWindow &) { return; }
+void Settings::events(const Vector2f, RenderWindow &) { return; }
 ////////////////////////////////////////////////////////////////////////////////////////
 
 // TODO - Toggles/Switches //
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: toggleVisible(const bool)
-void Options::toggleVisible(const bool toggle) {
+void Settings::toggleVisible(const bool toggle) {
   if (toggle) {
     title.toggleVisible(true);
-    backgrounds.toggleVisible(false);
-    pawns.toggleVisible(false);
+    backgrounds.toggleVisible(true);
+    pawns.toggleVisible(true);
     visible = true;
 
   } else {
@@ -84,7 +87,7 @@ void Options::toggleVisible(const bool toggle) {
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: isVisible(void)
-bool Options::isVisible(void) {
+bool Settings::isVisible(void) {
   if (visible)
     return true;
 
