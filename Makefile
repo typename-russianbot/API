@@ -20,5 +20,5 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $(CXX_FLAGS) $(OBJECTS) $(SFML_LIBS) -o $(TARGET) 
 
 build/%.o: source/%.cpp
-	mkdir -p $(BUILD) $(dir $@)
+	mkdir -p $(BUILD) $(dir $@) # verify source files #
 	$(CXX) $(CXX_FLAGS) -c $< -o $@ 
