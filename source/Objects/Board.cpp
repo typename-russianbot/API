@@ -9,7 +9,7 @@ Board::Board(const Vector2f position) : colorA(white), colorB(black) {
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 8; j++) {
       // active_tiles[i][j] = false;
-      tiles[i][j].resize(100);
+      tiles[i][j].resize(125);
       tiles[i][j].setPosition({x + xOffset, y + yOffset});
 
       if (i % 2 == 0) {
@@ -62,11 +62,11 @@ void Board::move(const Vector2f position) {
     for (int j = 0; j < 8; j++) {
       tiles[i][j].setPosition({x + xOffset, y + yOffset});
 
-      yOffset += tiles[i][j].getSize() + 50.f;
+      yOffset += tiles[i][j].getSize() + tiles[i][j].getSize() / 2.f;
     }
 
     yOffset = 0;
-    xOffset += tiles[i][i].getSize() + 50.f;
+    xOffset += tiles[i][0].getSize() + tiles[i][0].getSize() / 2.f;
   }
 
   return;
@@ -75,10 +75,19 @@ void Board::move(const Vector2f position) {
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: resize(const float)
 void Board::resize(const float size) {
+  float x = tiles[0][0].getPosition().x, y = tiles[0][0].getPosition().y,
+        xOffset = 0, yOffset = 0;
+
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 8; j++) {
       tiles[i][j].setSize(size);
+      tiles[i][j].setPosition({x + xOffset, y + yOffset});
+
+      yOffset += tiles[i][j].getSize() + tiles[i][j].getSize() / 2.f;
     }
+
+    yOffset = 0;
+    xOffset += tiles[i][0].getSize() + tiles[i][0].getSize() / 2.f;
   }
 
   return;

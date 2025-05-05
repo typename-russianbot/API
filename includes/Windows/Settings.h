@@ -1,5 +1,7 @@
 #pragma once
+#include "../Objects/Board.h"
 #include "../Objects/Button.h"
+#include "../Objects/Pawn.h"
 #include "../Objects/Textbox.h"
 
 //& Class - Options

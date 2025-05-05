@@ -11,9 +11,10 @@ private:
   Player player1;     //&* @var: player1
   Player player2;     //&* @var: player2
 
-  // TODO - Components //
+  // TODO - Trackers //
   Color highlight; // &* @var: highlight
   bool visible;    //&* @var: visible
+  bool selected;   //&* @var: selected
 
 public:
   // TODO - Resources //

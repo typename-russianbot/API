@@ -5,10 +5,11 @@
 //&* @public: Game(void)
 Game::Game(void)
     : checkerboard({725, 175}), player1(checkerboard, blue),
-      player2(checkerboard, yellow), highlight(yellow), visible(false) {
+      player2(checkerboard, yellow), highlight(yellow), visible(false),
+      selected(false) {
   toggleVisible(false);
   checkerboard.setPattern(red, white);
-  checkerboard.resize(125);
+  // checkerboard.resize(50);
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -58,6 +59,7 @@ void Game::toggleVisible(const bool toggle) {
     player2.toggleVisible(false);
     visible = false;
   }
+
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -69,4 +71,4 @@ bool Game::isVisible(void) {
 
   return false;
 }
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////s//////////////
