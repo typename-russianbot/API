@@ -120,6 +120,51 @@ void Board::invert(void) {
 ////////////////////////////////////////////////////////////////////////////////////////
 
 // TODO - Toggles //
+
+// TODO - Mutators/Accessors //
+////////////////////////////////////////////////////////////////////////////////////////
+//&* @public: setPattern(const Color, const Color)
+void Board::setPattern(const Pattern newPattern) {
+  pattern = newPattern;
+
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j < 8; j++) {
+      if (i % 2 == 0) {
+        if (j % 2 == 0)
+          grid[i][j].setBackgroundColor(pattern.getColorA());
+        else
+          grid[i][j].setBackgroundColor(pattern.getColorB());
+      } else {
+        if (j % 2 != 0)
+          grid[i][j].setBackgroundColor(pattern.getColorA());
+        else
+          grid[i][j].setBackgroundColor(pattern.getColorB());
+      }
+    }
+  }
+
+  return;
+}
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+//&* @public: setCell(const Vector2u, const TileState, const int)
+void Board::setCell(const Vector2u cell, const TileState owner,
+                    const int pawn) {
+  grid[cell.x][cell.y].setOwner(owner);
+  grid[cell.x][cell.y].setPawn(pawn);
+  return;
+}
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+//&* @public: getPattern(void)
+const Pattern Board::getPattern(void) { return pattern; }
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+//&* @public: getCell(const Vector2u)
+const Tile Board::getCell(const Vector2u cell) { return grid[cell.x][cell.y]; }
+////////////////////////////////////////////////////////////////////////////////////////
+
+// TODO - Toggles/Switches //
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: toggleHighlight(const Vector2f)
 void Board::toggleHighlight(const Vector2f mousePos) {
@@ -157,40 +202,6 @@ void Board::toggleVisible(const bool toggle) {
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
-
-// TODO - Mutators //
-////////////////////////////////////////////////////////////////////////////////////////
-//&* @public: setPattern(const Color, const Color)
-void Board::setPattern(const Pattern newPattern) {
-  pattern = newPattern;
-
-  for (int i = 0; i < 8; i++) {
-    for (int j = 0; j < 8; j++) {
-      if (i % 2 == 0) {
-        if (j % 2 == 0)
-          grid[i][j].setBackgroundColor(pattern.getColorA());
-        else
-          grid[i][j].setBackgroundColor(pattern.getColorB());
-      } else {
-        if (j % 2 != 0)
-          grid[i][j].setBackgroundColor(pattern.getColorA());
-        else
-          grid[i][j].setBackgroundColor(pattern.getColorB());
-      }
-    }
-  }
-
-  return;
-}
-////////////////////////////////////////////////////////////////////////////////////////
-
-// TODO - Accessors //
-////////////////////////////////////////////////////////////////////////////////////////
-//&* @public: getCell(const Vector2u)
-const Tile Board::getCell(const Vector2u cell) { return grid[cell.x][cell.y]; }
-////////////////////////////////////////////////////////////////////////////////////////
-
-// TODO - Switches //
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: isVisible(void)
 bool Board::isVisible() {
