@@ -3,25 +3,24 @@
 // TODO - Resources //
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: Board(const Vector2f)
-Board::Board(const Vector2f position) : colorA(white), colorB(black) {
+Board::Board(const Vector2f position) : pattern(white, black), visible(false) {
   float x = position.x, y = position.y, xOffset = 0, yOffset = 0;
 
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 8; j++) {
-      // active_tiles[i][j] = false;
-      tiles[i][j].resize(125);
-      tiles[i][j].setPosition({x + xOffset, y + yOffset});
+      grid[i][j].resize(125);
+      grid[i][j].setPosition({x + xOffset, y + yOffset});
 
       if (i % 2 == 0) {
         if (j % 2 == 0)
-          tiles[i][j].setBackgroundColor(colorA);
+          grid[i][j].setBackgroundColor(pattern.getColorA());
         else
-          tiles[i][j].setBackgroundColor(colorB);
+          grid[i][j].setBackgroundColor(pattern.getColorB());
       } else {
         if (j % 2 != 0)
-          tiles[i][j].setBackgroundColor(colorA);
+          grid[i][j].setBackgroundColor(pattern.getColorA());
         else
-          tiles[i][j].setBackgroundColor(colorB);
+          grid[i][j].setBackgroundColor(pattern.getColorB());
       }
       yOffset += 150;
     }
@@ -45,7 +44,7 @@ void Board::draw(RenderWindow &window) {
   if (isVisible()) {
     for (int i = 0; i < 8; i++) {
       for (int j = 0; j < 8; j++) {
-        tiles[i][j].draw(window);
+        grid[i][j].draw(window);
       }
     }
   }
@@ -60,13 +59,13 @@ void Board::move(const Vector2f position) {
 
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 8; j++) {
-      tiles[i][j].setPosition({x + xOffset, y + yOffset});
+      grid[i][j].setPosition({x + xOffset, y + yOffset});
 
-      yOffset += tiles[i][j].getSize() + tiles[i][j].getSize() / 2.f;
+      yOffset += grid[i][j].getSize() + grid[i][j].getSize() / 2.f;
     }
 
     yOffset = 0;
-    xOffset += tiles[i][0].getSize() + tiles[i][0].getSize() / 2.f;
+    xOffset += grid[i][0].getSize() + grid[i][0].getSize() / 2.f;
   }
 
   return;
@@ -75,19 +74,19 @@ void Board::move(const Vector2f position) {
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: resize(const float)
 void Board::resize(const float size) {
-  float x = tiles[0][0].getPosition().x, y = tiles[0][0].getPosition().y,
+  float x = grid[0][0].getPosition().x, y = grid[0][0].getPosition().y,
         xOffset = 0, yOffset = 0;
 
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 8; j++) {
-      tiles[i][j].setSize(size);
-      tiles[i][j].setPosition({x + xOffset, y + yOffset});
+      grid[i][j].setSize(size);
+      grid[i][j].setPosition({x + xOffset, y + yOffset});
 
-      yOffset += tiles[i][j].getSize() + tiles[i][j].getSize() / 2.f;
+      yOffset += grid[i][j].getSize() + grid[i][j].getSize() / 2.f;
     }
 
     yOffset = 0;
-    xOffset += tiles[i][0].getSize() + tiles[i][0].getSize() / 2.f;
+    xOffset += grid[i][0].getSize() + grid[i][0].getSize() / 2.f;
   }
 
   return;
@@ -96,22 +95,22 @@ void Board::resize(const float size) {
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: invert(void)
 void Board::invert(void) {
-  Color temp = colorA;
-  colorA = colorB;
-  colorB = temp;
+  Color temp = pattern.getColorA();
+  pattern.setColorA(pattern.getColorB());
+  pattern.setColorB(temp);
 
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 8; j++) {
       if (i % 2 == 0) {
         if (j % 2 == 0)
-          tiles[i][j].setBackgroundColor(colorA);
+          grid[i][j].setBackgroundColor(pattern.getColorA());
         else
-          tiles[i][j].setBackgroundColor(colorB);
+          grid[i][j].setBackgroundColor(pattern.getColorB());
       } else {
         if (j % 2 != 0)
-          tiles[i][j].setBackgroundColor(colorA);
+          grid[i][j].setBackgroundColor(pattern.getColorA());
         else
-          tiles[i][j].setBackgroundColor(colorB);
+          grid[i][j].setBackgroundColor(pattern.getColorB());
       }
     }
   }
@@ -126,10 +125,10 @@ void Board::invert(void) {
 void Board::toggleHighlight(const Vector2f mousePos) {
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 8; j++) {
-      if (tiles[i][j].inLocalBounds(mousePos) && tiles[i][j].isVisible())
-        tiles[i][j].toggleHighlight(true);
+      if (grid[i][j].inLocalBounds(mousePos) && grid[i][j].isVisible())
+        grid[i][j].toggleHighlight(true);
       else
-        tiles[i][j].toggleHighlight(false);
+        grid[i][j].toggleHighlight(false);
     }
   }
 
@@ -140,17 +139,17 @@ void Board::toggleHighlight(const Vector2f mousePos) {
 //&* @public: toggleVisible(const bool)
 void Board::toggleVisible(const bool toggle) {
   if (toggle) {
-    board_visible = true;
+    visible = true;
     for (int i = 0; i < 8; i++) {
       for (int j = 0; j < 8; j++) {
-        tiles[i][j].toggleVisible(true);
+        grid[i][j].toggleVisible(true);
       }
     }
   } else {
-    board_visible = false;
+    visible = false;
     for (int i = 0; i < 8; i++) {
       for (int j = 0; j < 8; j++) {
-        tiles[i][j].toggleVisible(false);
+        grid[i][j].toggleVisible(false);
       }
     }
   }
@@ -162,22 +161,21 @@ void Board::toggleVisible(const bool toggle) {
 // TODO - Mutators //
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: setPattern(const Color, const Color)
-void Board::setPattern(const Color A, const Color B) {
-  colorA = A;
-  colorB = B;
+void Board::setPattern(const Pattern newPattern) {
+  pattern = newPattern;
 
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 8; j++) {
       if (i % 2 == 0) {
         if (j % 2 == 0)
-          tiles[i][j].setBackgroundColor(colorA);
+          grid[i][j].setBackgroundColor(pattern.getColorA());
         else
-          tiles[i][j].setBackgroundColor(colorB);
+          grid[i][j].setBackgroundColor(pattern.getColorB());
       } else {
         if (j % 2 != 0)
-          tiles[i][j].setBackgroundColor(colorA);
+          grid[i][j].setBackgroundColor(pattern.getColorA());
         else
-          tiles[i][j].setBackgroundColor(colorB);
+          grid[i][j].setBackgroundColor(pattern.getColorB());
       }
     }
   }
@@ -185,25 +183,18 @@ void Board::setPattern(const Color A, const Color B) {
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////
-//&* @public: setActive(const Vector2u)
-void Board::setActive(const Vector2u cell) {
-  active_tiles[cell.x][cell.y] = true;
-  return;
-}
-////////////////////////////////////////////////////////////////////////////////////////
 
 // TODO - Accessors //
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: getCell(const Vector2u)
-const Tile Board::getCell(const Vector2u cell) { return tiles[cell.x][cell.y]; }
+const Tile Board::getCell(const Vector2u cell) { return grid[cell.x][cell.y]; }
 ////////////////////////////////////////////////////////////////////////////////////////
 
 // TODO - Switches //
 ////////////////////////////////////////////////////////////////////////////////////////
 //&* @public: isVisible(void)
 bool Board::isVisible() {
-  if (board_visible)
+  if (visible)
     return true;
 
   return false;
@@ -214,12 +205,7 @@ bool Board::isVisible() {
 bool Board::inLocalBounds(const Vector2f mousePos) {
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 8; j++) {
-      if (tiles[i][j].inLocalBounds(mousePos) && isVisible()) {
-        if (active_tiles[i][j] == true) {
-          cout << "active tile at: " << i << ", " << j << endl;
-        }
-        cout << "flargblarm" << endl;
-
+      if (grid[i][j].inLocalBounds(mousePos) && isVisible()) {
         return true;
       }
     }

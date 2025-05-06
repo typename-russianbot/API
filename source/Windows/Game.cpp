@@ -5,11 +5,9 @@
 //&* @public: Game(void)
 Game::Game(void)
     : checkerboard({725, 175}), player1(checkerboard, blue),
-      player2(checkerboard, yellow), highlight(yellow), visible(false),
-      selected(false) {
+      player2(checkerboard, yellow), highlight(yellow), visible(false) {
   toggleVisible(false);
-  checkerboard.setPattern(red, white);
-  // checkerboard.resize(50);
+  checkerboard.setPattern({red, white});
   return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -39,9 +37,15 @@ void Game::highlights(const Vector2f mousePos) {
 //&* @public: events(const Vector2f, RenderWindow&)
 void Game::events(const Vector2f mousePos, RenderWindow &window) {
   //? @note: Handle selectOrigin/selectDestination methods for the grid here
+  if (checkerboard.inLocalBounds(mousePos)) {
+  }
 
   return;
 }
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+//&* @public: select(const Vector2u)
+void Game::select(const Vector2u) {}
 ////////////////////////////////////////////////////////////////////////////////////////
 
 // TODO - Toggles/Switches //
